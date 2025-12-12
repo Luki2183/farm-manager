@@ -15,13 +15,19 @@ public class FieldController {
 
     private final FieldService fieldService;
 
+
+    @GetMapping
+    public List<FieldEntity> getAllFields(){
+        return fieldService.getAllFields();
+    }
+
     @PostMapping
     public FieldEntity addField(@RequestBody FieldDto dto){
         return fieldService.saveField(dto);
     }
 
-    @GetMapping
-    public List<FieldEntity> getAllFields(){
-        return fieldService.getAllFields();
+    @DeleteMapping("/{id}")
+    public void deleteField(@PathVariable String id){
+        fieldService.deleteFieldById(id);
     }
 }

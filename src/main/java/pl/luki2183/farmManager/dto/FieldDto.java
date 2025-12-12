@@ -6,12 +6,6 @@ import java.util.List;
 
 @Data
 public class FieldDto {
-    private String name;
-    private List<Point> coordinates;
-
-    @Data
-    public static class Point {
-        private double lat;
-        private double lng;
-    }
+    private String id;
+    private List<PointDto> coordinates;
 }

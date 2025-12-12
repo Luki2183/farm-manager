@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="PL">
+<head>
+    <meta charset="UTF-8">
+    <title>Polygon Drawing</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <script th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${@googleMapsConfig.getKey()} + '&loading=async&callback=initMap'}"></script>
+
+    <script src="https://unpkg.com/terra-draw@1.2.0/dist/terra-draw.umd.js"></script>
+    <script src="https://unpkg.com/terra-draw-google-maps-adapter@1.1.2/dist/terra-draw-google-maps-adapter.umd.js"></script>
+
+    <script th:src="@{/js/load_map_terra_draw.js}"></script>
+</head>
+<body>
+<div style="position: absolute; top: 0px; right: 100px; height: max-content; z-index: 99">
+    <button onclick="setMode('select')" class="setMode">Free hand</button>
+    <button onclick="setMode('polygon')"  class="setMode">Polygon</button>
+    <button onclick="deleteSelectedPolygon()"  class="setMode">Delete</button>
+</div>
+    <div id="map"></div>
+</body>
+</html>

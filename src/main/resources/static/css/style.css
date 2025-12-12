@@ -1,3 +1,4 @@
+/*todo reformat whole css -,-*/
 html,
 body {
     height: 100%;
@@ -28,4 +29,9 @@ body {
 }
 #contextMenu div:hover {
     background: #f0f0f0;
+}
+.setMode {
+    width: fit-content;
+    height: 20px;
+    position: relative;
 }

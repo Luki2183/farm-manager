@@ -14,10 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class FieldEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
+    private String id;
 
     @ElementCollection
     @CollectionTable(name = "polygon_points", joinColumns = @JoinColumn(name = "polygon_id"))

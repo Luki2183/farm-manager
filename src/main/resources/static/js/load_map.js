@@ -62,10 +62,25 @@ function hideContextMenu() {
 }
 
 function deletePolygon() {
-    if (selectedPolygon) {
-        selectedPolygon.setMap(null);
-        selectedPolygon = null;
+    if (!selectedPolygon)
+        return
+
+    const id = selectedPolygon.dbId;
+
+    if (id){
+        fetch(`/api/fields/${id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (!response.ok){
+                console.error("Failed to delete polygon from DB")
+                return;
+            }
+            console.log("Deleted polygon from DB", id)
+        });
     }
+
+    selectedPolygon.setMap(null);
+
     hideContextMenu();
 }
 
@@ -107,6 +122,7 @@ function savePolygon() {
         .then(data => {
             console.log("Polygon saved:", data);
             alert("Polygon saved!");
+            selectedPolygon.dbId = data.id;
         })
         .catch(err => console.error(err));
 
@@ -128,6 +144,8 @@ function drawPolygonFromDb(polygonData) {
         strokeWeight: 2,
         editable: false
     });
+
+    polygon.dbId = polygonData.id;
 
     // Reattach right-click menu so it behaves like a new polygon
     attachPolygonEvents(polygon, map);
