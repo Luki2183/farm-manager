@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Polygon Drawing</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/animations.css}">
 
     <script th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${@googleMapsConfig.getKey()} + '&loading=async&callback=initMap'}"></script>
 
@@ -13,11 +14,7 @@
     <script th:src="@{/js/load_map_terra_draw.js}"></script>
 </head>
 <body>
-<div style="position: absolute; top: 0px; right: 100px; height: max-content; z-index: 99">
-    <button onclick="setMode('select')" class="setMode">Free hand</button>
-    <button onclick="setMode('polygon')"  class="setMode">Polygon</button>
-    <button onclick="deleteSelectedPolygon()"  class="setMode">Delete</button>
-</div>
+    <div th:replace="map-controls :: mapControls"></div>
     <div id="map"></div>
 </body>
 </html>

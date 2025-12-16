@@ -60,8 +60,9 @@ async function initMap() {
             //     })()}
         });
 
+        prepareButtonsVisual()
         draw.start();
-        draw.setMode('select')
+        setMode("select")
         draw.on("select", (id) => {
             console.log("selected feature with id: ", id)
             selectedFeatureId = id;
@@ -149,4 +150,17 @@ function deleteSelectedPolygon(){
     } else {
         console.log("   feature not selected")
     }
+}
+
+function prepareButtonsVisual(){
+    document.querySelectorAll(".setMode").forEach((button, index) =>{
+        if (index > 1) return
+        button.addEventListener("click", () =>{
+            document.querySelectorAll(".setMode")
+                .forEach(btn => {
+                    btn.classList.remove("active");
+                })
+            button.classList.add("active");
+        })
+    })
 }
