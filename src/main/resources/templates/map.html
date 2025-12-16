@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="PL">
 <head>
     <meta charset="UTF-8">
-    <title>Polygon Drawing</title>
+    <title>FarmMap</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/animations.css}">
 
@@ -11,10 +12,12 @@
     <script src="https://unpkg.com/terra-draw@1.2.0/dist/terra-draw.umd.js"></script>
     <script src="https://unpkg.com/terra-draw-google-maps-adapter@1.1.2/dist/terra-draw-google-maps-adapter.umd.js"></script>
 
-    <script th:src="@{/js/load_map_terra_draw.js}"></script>
+    <script th:src="@{/js/load_map_and_logic.js}"></script>
+    <script th:src="@{/js/prepare_visuals.js}"></script>
 </head>
 <body>
     <div th:replace="map-controls :: mapControls"></div>
+<!--    todo replace with MapElement in order for map-controls to be visible in fullscreen-->
     <div id="map"></div>
 </body>
 </html>

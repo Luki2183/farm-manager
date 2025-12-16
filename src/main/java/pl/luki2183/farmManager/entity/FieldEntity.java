@@ -17,6 +17,6 @@ public class FieldEntity {
     private String id;
 
     @ElementCollection
-    @CollectionTable(name = "polygon_points", joinColumns = @JoinColumn(name = "polygon_id"))
+    @CollectionTable(name = "field_points", joinColumns = @JoinColumn(name = "field_id"))
     private List<PointEntity> coordinates;
 }

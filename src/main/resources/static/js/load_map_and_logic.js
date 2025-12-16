@@ -60,19 +60,17 @@ async function initMap() {
             //     })()}
         });
 
-        prepareButtonsVisual()
         draw.start();
+        prepareButtonsVisual()
         setMode("select")
         draw.on("select", (id) => {
-            console.log("selected feature with id: ", id)
+            console.info("Selected feature with id: ", id)
             selectedFeatureId = id;
         })
         draw.on("deselect", () => {
-            console.log("deselected feature");
             selectedFeatureId = null;
         })
         draw.on("finish", (feature) => {
-            console.log("Trying to invoke savePolygon with feature id: ", JSON.stringify(feature));
             savePolygon(feature)
         })
 
@@ -81,86 +79,58 @@ async function initMap() {
 
 }
 
-function savePolygon(feature) {
+function savePolygon(featureId) {
+    console.debug("Entering savePolygon(feature) with input=%o", featureId)
 
-    console.log("savePolygon function call")
-
-    const field = draw.getSnapshotFeature(feature)
-
-    const coordinates = [];
-
-    for (var array of field.geometry.coordinates[0]){
-        coordinates.push({ lat: array[0], lng: array[1] });
-    }
-
-    const polygonData = {
-        id: field.id,
-        coordinates: coordinates
-    }
+    const field = draw.getSnapshotFeature(featureId)
 
     fetch("/api/fields", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(polygonData)
+        body: JSON.stringify(field)
     })
         .then(response => {
-            if (!response.ok) throw new Error("Failed to save polygon");
+            if (!response.ok) throw new Error("Failed to save polygon with input=%o", featureId);
             return response.json();
         })
         .then(data => {
-            console.log("Polygon saved with data: ", data);
+            console.info("Polygon saved with output=%o", data);
         })
         .catch(err => console.error(err));
 }
 
 function setMode(mode) {
-    console.log("changed mode to: " + mode)
+    console.info("Changed user mode to: " + mode)
     draw.setMode(mode);
 }
 
 function loadPolygons(){
-    console.info("loadPolygons function invocation")
     fetch("/api/geojsons")
         .then(response => response.json())
         .then(features => {
-            console.info("trying to load features: ", features)
+            console.debug("Entering draw.addFeatures() with input=%o ", features)
             draw.addFeatures(features)
         })
 }
 
 function deleteSelectedPolygon(){
-    console.log("deleteSelectedPolygon invocation")
     if (selectedFeatureId){
+        console.debug("Entering deleteSelectedPolygon() with current selectedFeatureId=%o", selectedFeatureId)
         let id = selectedFeatureId
-        console.log("   trying to delete feature with id: ", selectedFeatureId)
         draw.deselectFeature(selectedFeatureId)
         fetch(`/api/fields/${id}`, {
             method: 'DELETE'
         }).then(response => {
             if (!response.ok){
-                console.error("Failed to delete polygon from DB")
-                draw.selectFeature(id)
+                console.error("Failed to delete polygon from DB with id=%o", id)
                 return;
             }
-            console.log("Deleted polygon from DB with id: ", id)
+            console.info("Deleted polygon from DB with id=%o ", id)
             draw.removeFeatures([id])
         });
     } else {
-        console.log("   feature not selected")
+        console.warn("Entering deleteSelectedPolygon() without selected polygon")
     }
-}
-
-function prepareButtonsVisual(){
-    document.querySelectorAll(".setMode").forEach((button, index) =>{
-        if (index > 1) return
-        button.addEventListener("click", () =>{
-            document.querySelectorAll(".setMode")
-                .forEach(btn => {
-                    btn.classList.remove("active");
-                })
-            button.classList.add("active");
-        })
-    })
 }
