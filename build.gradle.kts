@@ -36,6 +36,7 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 
 	annotationProcessor("org.projectlombok:lombok")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // https://mvnrepository.com/artifact/com.h2database/h2
     runtimeOnly("com.h2database:h2:2.3.232")
@@ -44,7 +45,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
-    testImplementation("org.assertj:assertj-core:3.27.6")
+    testImplementation("org.assertj:assertj-core:3.27.7")
 
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
