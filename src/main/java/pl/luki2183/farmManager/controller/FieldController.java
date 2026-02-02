@@ -6,7 +6,9 @@ import pl.luki2183.farmManager.dto.FieldDto;
 import pl.luki2183.farmManager.dto.GeoJSONDto;
 import pl.luki2183.farmManager.entity.FieldEntity;
 import pl.luki2183.farmManager.mapper.FieldMapper;
-import pl.luki2183.farmManager.service.FieldService;
+import pl.luki2183.farmManager.service.FieldGetService;
+import pl.luki2183.farmManager.service.FieldPostService;
+import pl.luki2183.farmManager.service.FieldDeleteService;
 
 import java.util.List;
 
@@ -15,21 +17,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FieldController {
 
-    private final FieldService fieldService;
+    private final FieldGetService getService;
+    private final FieldPostService postService;
+    private final FieldDeleteService deleteService;
     private final FieldMapper fieldMapper;
 
     @GetMapping
     public List<FieldDto> getAllFields(){
-        return fieldMapper.fieldToDtoList(fieldService.getAllFields());
+        return fieldMapper.fieldToDtoList(getService.getAllFields());
     }
 
     @PostMapping
     public FieldEntity addField(@RequestBody GeoJSONDto dto){
-        return fieldService.saveField(dto);
+        return postService.saveField(dto);
     }
 
     @DeleteMapping("/{id}")
     public void deleteField(@PathVariable String id){
-        fieldService.deleteFieldById(id);
+        deleteService.deleteFieldById(id);
     }
 }
