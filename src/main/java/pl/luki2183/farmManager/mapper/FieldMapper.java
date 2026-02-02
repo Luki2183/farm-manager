@@ -5,6 +5,7 @@ import pl.luki2183.farmManager.dto.FieldDto;
 import pl.luki2183.farmManager.dto.GeoJSONDto;
 import pl.luki2183.farmManager.dto.PointDto;
 import pl.luki2183.farmManager.entity.FieldEntity;
+import pl.luki2183.farmManager.entity.PointEntity;
 
 import java.util.List;
 
@@ -47,5 +48,23 @@ public class FieldMapper {
                 }).toList()
         );
         return result;
+    }
+
+    public FieldEntity geoJSONDtoToFieldEntity(GeoJSONDto dto) {
+        FieldEntity entity = new FieldEntity();
+
+        entity.setId(dto.getId());
+
+        entity.setCoordinates(
+                dto.getGeometry().getCoordinates().getFirst().stream()
+                        .map(doubles -> {
+                            PointEntity result = new PointEntity();
+                            result.setLat(doubles[0]);
+                            result.setLng(doubles[1]);
+                            return result;
+                        }).toList()
+        );
+
+        return entity;
     }
 }
