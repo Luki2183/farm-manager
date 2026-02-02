@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="PL">
+<body>
+    <div id="buttons-overlay" th:fragment="mapControls">
+        <div class="controls">
+            <button onclick="setMode('select')" class="setMode scale-in-ver-center active">Free hand</button>
+            <button onclick="setMode('polygon')"  class="setMode scale-in-ver-center">Polygon</button>
+            <button onclick="deleteSelectedPolygon()"  class="setMode scale-in-ver-center">Delete</button>
+        </div>
+    </div>
+</body>
+</html>
