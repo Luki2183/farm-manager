@@ -84,6 +84,8 @@ function savePolygon(featureId) {
 
     const field = draw.getSnapshotFeature(featureId)
 
+    field['area'] = calculateArea(field)
+
     fetch("/api/fields", {
         method: "POST",
         headers: {
@@ -133,4 +135,10 @@ function deleteSelectedPolygon(){
     } else {
         console.warn("Entering deleteSelectedPolygon() without selected polygon")
     }
+}
+
+function calculateArea(feature) {
+    const area = turf.area(feature)
+    console.log("Calculated area for %o, result: %o", feature.id, area)
+    return area
 }

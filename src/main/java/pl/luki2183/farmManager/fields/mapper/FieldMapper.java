@@ -47,6 +47,7 @@ public class FieldMapper {
                     return pointDto;
                 }).toList()
         );
+        result.setArea(fieldEntity.getArea());
         return result;
     }
 
@@ -64,6 +65,8 @@ public class FieldMapper {
                             return result;
                         }).toList()
         );
+
+        entity.setArea(dto.getArea());
 
         return entity;
     }

@@ -19,4 +19,6 @@ public class FieldEntity {
     @ElementCollection
     @CollectionTable(name = "field_points", joinColumns = @JoinColumn(name = "field_id"))
     private List<PointEntity> coordinates;
+
+    private Double area;
 }

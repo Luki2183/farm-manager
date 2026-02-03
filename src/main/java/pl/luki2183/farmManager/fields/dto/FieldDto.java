@@ -8,4 +8,5 @@ import java.util.List;
 public class FieldDto {
     private String id;
     private List<PointDto> coordinates;
+    private Double area;
 }

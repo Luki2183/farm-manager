@@ -8,6 +8,7 @@ import java.util.List;
 public class GeoJSONDto {
     private String id;
     private String type = "Feature";
+    private Double area;
     private Geometry geometry;
     private Properties properties = new Properties();
 
