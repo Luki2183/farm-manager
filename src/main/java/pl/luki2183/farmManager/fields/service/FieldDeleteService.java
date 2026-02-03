@@ -1,9 +1,9 @@
-package pl.luki2183.farmManager.service;
+package pl.luki2183.farmManager.fields.service;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.repo.FieldRepository;
+import pl.luki2183.farmManager.fields.repo.FieldRepository;
 
 @Service
 @RequiredArgsConstructor
