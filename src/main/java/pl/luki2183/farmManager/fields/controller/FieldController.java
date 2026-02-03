@@ -20,11 +20,10 @@ public class FieldController {
     private final FieldGetService getService;
     private final FieldPostService postService;
     private final FieldDeleteService deleteService;
-    private final FieldMapper fieldMapper;
 
     @GetMapping
     public List<FieldDto> getAllFields(){
-        return fieldMapper.fieldToDtoList(getService.getAllFields());
+        return getService.getAllFields();
     }
 
     @PostMapping

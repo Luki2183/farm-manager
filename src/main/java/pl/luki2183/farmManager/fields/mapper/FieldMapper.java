@@ -13,10 +13,10 @@ import java.util.List;
 public class FieldMapper {
     public List<GeoJSONDto> fieldsToGeoJSONDtoList(List<FieldEntity> fields) {
         return fields.stream()
-                .map(this::fieldToGeoJSON).toList();
+                .map(this::fieldToGeoJSONDto).toList();
     }
 
-    public GeoJSONDto fieldToGeoJSON(FieldEntity field) {
+    public GeoJSONDto fieldToGeoJSONDto(FieldEntity field) {
         GeoJSONDto result = new GeoJSONDto();
         result.setId(field.getId());
         GeoJSONDto.Geometry geometry = new GeoJSONDto.Geometry();
@@ -28,10 +28,11 @@ public class FieldMapper {
         }).toList();
         geometry.setCoordinates(List.of(points));
         result.setGeometry(geometry);
+        result.setArea(field.getArea());
         return result;
     }
 
-    public List<FieldDto> fieldToDtoList(List<FieldEntity> fields) {
+    public List<FieldDto> fieldsToDtoList(List<FieldEntity> fields) {
         return fields.stream()
                 .map(this::fieldToDto).toList();
     }

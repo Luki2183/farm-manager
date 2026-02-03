@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
 import pl.luki2183.farmManager.fields.service.FieldGetService;
+import pl.luki2183.farmManager.fields.service.GeoJSONGetService;
 
 import java.util.List;
 
@@ -16,11 +17,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeoJSONController {
 
-    private final FieldGetService getService;
-    private final FieldMapper fieldMapper;
+    private final GeoJSONGetService getService;
 
     @GetMapping
     public List<GeoJSONDto> getGeoJSONs(){
-        return fieldMapper.fieldsToGeoJSONDtoList(getService.getAllFields());
+        return getService.getAllGeoJSONs();
     }
 }
