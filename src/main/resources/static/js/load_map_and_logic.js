@@ -1,6 +1,7 @@
 let map;
 let draw;
 let selectedFeatureId = null;
+const historyToUndo = []
 
 async function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -63,15 +64,17 @@ async function initMap() {
         draw.start();
         prepareButtonsVisual()
         setMode("select")
-        draw.on("select", (id) => {
-            console.info("Selected feature with id: ", id)
-            selectedFeatureId = id;
+        draw.on("select", (featureId) => {
+            console.info("Selected feature with id: ", featureId)
+            selectedFeatureId = featureId;
         })
         draw.on("deselect", () => {
             selectedFeatureId = null;
         })
-        draw.on("finish", (feature) => {
+        draw.on("finish", (featureId) => {
+            let feature = draw.getSnapshotFeature(featureId)
             savePolygon(feature)
+            historyToUndo.push(structuredClone(feature))
         })
 
         loadPolygons()
@@ -79,22 +82,20 @@ async function initMap() {
 
 }
 
-function savePolygon(featureId) {
-    console.debug("Entering savePolygon(feature) with input=%o", featureId)
+function savePolygon(feature) {
+    console.debug("Entering savePolygon(feature) with input=%o", feature)
 
-    const field = draw.getSnapshotFeature(featureId)
-
-    field['area'] = calculateArea(field)
+    feature['area'] = calculateArea(feature)
 
     fetch("/api/fields", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(field)
+        body: JSON.stringify(feature)
     })
         .then(response => {
-            if (!response.ok) throw new Error("Failed to save polygon with input=%o", featureId);
+            if (!response.ok) throw new Error("Failed to save polygon with input=%o", feature);
             return response.json();
         })
         .then(data => {
@@ -119,6 +120,7 @@ function loadPolygons(){
 
 function deleteSelectedPolygon(){
     if (selectedFeatureId){
+        let tempClone = structuredClone(draw.getSnapshotFeature(selectedFeatureId))
         console.debug("Entering deleteSelectedPolygon() with current selectedFeatureId=%o", selectedFeatureId)
         let id = selectedFeatureId
         draw.deselectFeature(selectedFeatureId)
@@ -131,6 +133,7 @@ function deleteSelectedPolygon(){
             }
             console.info("Deleted polygon from DB with id=%o ", id)
             draw.removeFeatures([id])
+            historyToUndo.push(tempClone)
         });
     } else {
         console.warn("Entering deleteSelectedPolygon() without selected polygon")
@@ -142,3 +145,40 @@ function calculateArea(feature) {
     console.log("Calculated area for %o, result: %o", feature.id, area)
     return area
 }
+
+function updateFromHistory(type = "undo") {
+    console.debug("Entering updateFromHistory(type) with input=%o", type)
+    let previous = null
+    if (type === "undo" && historyToUndo.length !== 0) {
+        if (!draw.hasFeature(historyToUndo.at(-1).id)) {
+            previous = historyToUndo.pop()
+        } else if (historyToUndo.length > 1) {
+            previous = historyToUndo.pop()
+            previous = historyToUndo.at(-1)
+        } else {
+            console.error("History to %o is not empty but nothing changed", type)
+            console.debug("History object=%o", historyToUndo)
+        }
+    } else {
+        console.error("History to %o is empty", type)
+        if (type === "undo") console.debug("History object=%o", historyToUndo)
+    }
+    updateWhenNotNull(previous)
+}
+
+// Helper function to updateFromHistory(type)
+function updateWhenNotNull(feature) {
+    if (feature !== null && feature !== undefined) {
+        console.debug("Successful check for update conditions with input=%o", feature)
+        if (draw.hasFeature(feature.id)) draw.removeFeatures([feature.id])
+        draw.addFeatures([feature])
+        savePolygon(feature)
+    } else
+        console.debug("Error when checking update conditions with input=%o", feature)
+}
+
+// Shortcuts
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Delete") deleteSelectedPolygon()
+    if (e.ctrlKey && e.key === "z") updateFromHistory()
+})
