@@ -1,6 +1,7 @@
 let map;
 let draw;
 let selectedFeatureId = null;
+let geometryCopyOfSelected = null
 const historyToUndo = new Map()
 const historySequence = []
 
@@ -67,20 +68,29 @@ async function initMap() {
         setMode("select")
         draw.on("select", (featureId) => {
             console.info("Selected feature with id: ", featureId)
+            geometryCopyOfSelected = structuredClone(draw.getSnapshotFeature(featureId).geometry)
             selectedFeatureId = featureId;
         })
         draw.on("deselect", () => {
+            console.info("Deselected feature with id=%o", selectedFeatureId)
+            let change = JSON.stringify(geometryCopyOfSelected) !== JSON.stringify(draw.getSnapshotFeature(selectedFeatureId).geometry)
+            if (change) addOrUpdateOnFinishOrDeselect(selectedFeatureId)
             selectedFeatureId = null;
+            geometryCopyOfSelected = null
         })
         draw.on("finish", (featureId) => {
-            let feature = draw.getSnapshotFeature(featureId)
-            savePolygon(feature)
-            addToHistory(featureId, structuredClone(feature))
+            addOrUpdateOnFinishOrDeselect(featureId)
         })
 
         loadPolygons()
     })
 
+}
+
+function addOrUpdateOnFinishOrDeselect(featureId) {
+    let feature = draw.getSnapshotFeature(featureId)
+    savePolygon(feature)
+    addToHistory(featureId, structuredClone(feature))
 }
 
 function savePolygon(feature) {
@@ -154,17 +164,16 @@ function updateFromHistory(type = "undo") {
     console.debug("Entering updateFromHistory(type) with input=%o", type)
     setMode("select")
     let previous = null
-    let typeChange = null
     if (type === "undo" && historySequence.length !== 0) {
-        let featureId = historySequence.pop()
+        let featureId = historySequence.at(-1)
         let tempArray = structuredClone(historyToUndo.get(featureId))
         if (!draw.hasFeature(featureId)) {
+            historySequence.pop()
             previous = tempArray.pop()
-            typeChange = "delete"
         } else if (tempArray.length > 1) {
+            historySequence.pop()
             previous = tempArray.pop()
             previous = tempArray.at(-1)
-            typeChange = "move"
         } else {
             console.error("History to %o is not empty but nothing changed", type)
             console.debug("History object=%o", historyToUndo)
@@ -175,15 +184,16 @@ function updateFromHistory(type = "undo") {
         if (type === "undo") console.debug("History object=%o", historyToUndo)
         return
     }
-    updateFeatureWhenNotNull(previous, typeChange)
+    updateFeatureWhenNotNull(previous)
 }
 
 // Helper function to updateFromHistory(type)
-function updateFeatureWhenNotNull(feature, typeChange) {
-    if (feature !== null && feature !== undefined && typeChange !== null) {
-        console.debug("Successful check for update conditions with input=%o,%o", feature, typeChange)
+function updateFeatureWhenNotNull(feature) {
+    if (feature !== null && feature !== undefined) {
+        console.debug("Successful check for update conditions with input=%o", feature)
         updateHistory(feature.id)
         if (draw.hasFeature(feature.id)) draw.removeFeatures([feature.id])
+        else historySequence.push(feature.id)
         draw.addFeatures([feature])
         savePolygon(feature)
     } else
@@ -197,6 +207,11 @@ function updateHistory(featureId) {
 }
 
 function addToHistory(featureId, feature) {
+    // Additional check when double saving to db
+    if (historyToUndo.has(featureId)){
+        if (JSON.stringify(historyToUndo.get(featureId).at(-1).geometry) === JSON.stringify(feature.geometry)) return
+    }
+
     historySequence.push(featureId)
     let array;
     if (historyToUndo.has(featureId)) {
