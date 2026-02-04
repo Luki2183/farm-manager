@@ -175,11 +175,11 @@ function updateFromHistory(type = "undo") {
         if (type === "undo") console.debug("History object=%o", historyToUndo)
         return
     }
-    updateWhenNotNull(previous, typeChange)
+    updateFeatureWhenNotNull(previous, typeChange)
 }
 
 // Helper function to updateFromHistory(type)
-function updateWhenNotNull(feature, typeChange) {
+function updateFeatureWhenNotNull(feature, typeChange) {
     if (feature !== null && feature !== undefined && typeChange !== null) {
         console.debug("Successful check for update conditions with input=%o,%o", feature, typeChange)
         updateHistory(feature.id)
