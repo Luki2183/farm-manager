@@ -27,9 +27,9 @@ public class FieldInfoController {
         return getService.getAllInfo();
     }
 
-    @GetMapping("/{id}")
-    public FieldInfoDto getInfoById(@PathVariable String id) {
-        return getService.getInfoById(id);
+    @GetMapping("/{fieldId}")
+    public FieldInfoDto getInfoByFieldId(@PathVariable String fieldId) {
+        return getService.getInfoByFieldId(fieldId);
     }
 
     @PostMapping

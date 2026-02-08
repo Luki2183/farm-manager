@@ -14,7 +14,7 @@ public class FieldInfoMapper {
                 .toList();
     }
 
-    private FieldInfoDto infoToDto(FieldInfoEntity entity) {
+    public FieldInfoDto infoToDto(FieldInfoEntity entity) {
         return FieldInfoDto.builder()
                 .fieldId(entity.getFieldId())
                 .surfaceArea(entity.getSurfaceArea())
