@@ -1,5 +1,6 @@
 package pl.luki2183.farmManager.fieldInfo.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.util.Date;
 
 @Data
+@Builder
 public class FieldInfoDto {
     private String fieldId;
     private Double surfaceArea;
