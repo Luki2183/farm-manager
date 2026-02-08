@@ -20,6 +20,8 @@ public class FieldInfoEntity {
 
     private String fieldId;
 
+    private Double surfaceArea;
+
     private Grain grainType;
 
     private Date plantDate;
