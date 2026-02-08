@@ -14,7 +14,6 @@ public class FieldPostService {
     private final FieldRepository repository;
     private final FieldMapper mapper;
 
-//    todo change to void
     public FieldEntity saveField(GeoJSONDto dto){
         FieldEntity entity = mapper.geoJSONDtoToFieldEntity(dto);
         return repository.save(entity);

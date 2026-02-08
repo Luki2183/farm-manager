@@ -16,8 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FieldController {
 
-//    todo add response status
-
     private final FieldGetService getService;
     private final FieldPostService postService;
     private final FieldDeleteService deleteService;
@@ -28,7 +26,6 @@ public class FieldController {
     }
 
 //    todo separate into post and put mapping
-//    todo make postmapping not return fieldEntity but void with response status
     @PostMapping
     public FieldEntity addField(@RequestBody GeoJSONDto dto){
         return postService.saveField(dto);
