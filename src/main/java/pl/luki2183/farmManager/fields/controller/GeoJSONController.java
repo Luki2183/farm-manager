@@ -19,6 +19,8 @@ public class GeoJSONController {
 
     private final GeoJSONGetService getService;
 
+    //todo add response status
+
     @GetMapping
     public List<GeoJSONDto> getGeoJSONs(){
         return getService.getAllGeoJSONs();

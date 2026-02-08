@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fields.dto.FieldDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.dto.PointDto;
-import pl.luki2183.farmManager.fields.entity.FieldEntity;
-import pl.luki2183.farmManager.fields.entity.PointEntity;
+import pl.luki2183.farmManager.fields.model.FieldEntity;
+import pl.luki2183.farmManager.fields.model.PointEntity;
 
 import java.util.List;
 

@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.luki2183.farmManager.fields.dto.FieldDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
-import pl.luki2183.farmManager.fields.entity.FieldEntity;
-import pl.luki2183.farmManager.fields.mapper.FieldMapper;
+import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.service.FieldGetService;
 import pl.luki2183.farmManager.fields.service.FieldPostService;
 import pl.luki2183.farmManager.fields.service.FieldDeleteService;
@@ -17,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FieldController {
 
+//    todo add response status
+
     private final FieldGetService getService;
     private final FieldPostService postService;
     private final FieldDeleteService deleteService;
@@ -26,6 +27,8 @@ public class FieldController {
         return getService.getAllFields();
     }
 
+//    todo separate into post and put mapping
+//    todo make postmapping not return fieldEntity but void with response status
     @PostMapping
     public FieldEntity addField(@RequestBody GeoJSONDto dto){
         return postService.saveField(dto);

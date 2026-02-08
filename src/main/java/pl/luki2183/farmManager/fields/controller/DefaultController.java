@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DefaultController {
 
+//    todo add response status
+
     @GetMapping("/")
     public String map(Model model) {
         return "map";

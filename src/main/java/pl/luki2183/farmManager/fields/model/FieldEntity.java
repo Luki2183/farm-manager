@@ -1,4 +1,4 @@
-package pl.luki2183.farmManager.fields.entity;
+package pl.luki2183.farmManager.fields.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
