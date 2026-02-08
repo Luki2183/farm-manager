@@ -9,7 +9,21 @@ import java.util.List;
 @Component
 public class FieldInfoMapper {
     public List<FieldInfoDto> infoToDtoList(List<FieldInfoEntity> all) {
-//        todo create method
-        return null;
+        return all.stream()
+                .map(this::infoToDto)
+                .toList();
+    }
+
+    private FieldInfoDto infoToDto(FieldInfoEntity entity) {
+        return FieldInfoDto.builder()
+                .fieldId(entity.getFieldId())
+                .surfaceArea(entity.getSurfaceArea())
+                .grainType(entity.getGrainType())
+                .plantDate(entity.getPlantDate())
+                .expectedHarvestDate(entity.getExpectedHarvestDate())
+                .humidity(entity.getHumidity())
+                .windSpeed(entity.getWindSpeed())
+                .fieldColor(entity.getFieldColor())
+                .build();
     }
 }
