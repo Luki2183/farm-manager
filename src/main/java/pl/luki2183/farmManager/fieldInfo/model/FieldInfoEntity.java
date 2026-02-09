@@ -16,7 +16,7 @@ import java.util.Date;
 @Table(name = "field_info_entities")
 public class FieldInfoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO) // NEED TO DELETE THIS IN ORDER TO UPDATE BY POST METHOD
     private String id;
 
     private String fieldId;
