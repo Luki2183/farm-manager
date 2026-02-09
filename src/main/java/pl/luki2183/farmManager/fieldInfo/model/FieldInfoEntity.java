@@ -2,10 +2,7 @@ package pl.luki2183.farmManager.fieldInfo.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.awt.*;
 import java.util.Date;
@@ -14,6 +11,7 @@ import java.util.Date;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class FieldInfoEntity {
     @Id
     private String id;

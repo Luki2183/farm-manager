@@ -15,7 +15,7 @@ public class FieldInfoPostService {
     private final FieldInfoMapper mapper;
 
     public FieldInfoEntity addInfo(FieldInfoDto dto) {
-//        todo implement method
-        return null;
+        FieldInfoEntity entity = mapper.dtoToInfo(dto);
+        return repository.save(entity);
     }
 }
