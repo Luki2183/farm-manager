@@ -1,23 +1,31 @@
 package pl.luki2183.farmManager.fieldInfo.mapper;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
+import pl.luki2183.farmManager.fieldInfo.model.Grain;
 import pl.luki2183.farmManager.fieldInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.service.WeatherGetService;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
 import pl.luki2183.farmManager.fields.service.FieldGetService;
 
+import java.awt.*;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class FieldInfoMapper {
 
     private final WeatherGetService weatherGetService;
     private final FieldRepository fieldRepository;
+    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public List<FieldInfoDto> infoToDtoList(List<FieldInfoEntity> all) {
         return all.stream()
@@ -26,16 +34,17 @@ public class FieldInfoMapper {
     }
 
     public FieldInfoDto infoToDto(FieldInfoEntity entity) {
-        return FieldInfoDto.builder()
-                .fieldId(entity.getField().getId())
-                .surfaceArea(entity.getSurfaceArea())
-                .grainType(entity.getGrainType())
-                .plantDate(entity.getPlantDate())
-                .expectedHarvestDate(entity.getExpectedHarvestDate())
-                .humidity(entity.getWeatherInfo().getHumidity())
-                .windSpeed(entity.getWeatherInfo().getWindSpeed())
-                .fieldColor(entity.getFieldColor())
-                .build();
+        FieldInfoDto dto = new FieldInfoDto();
+        dto.setFieldId(entity.getFieldId());
+        dto.setSurfaceArea(entity.getSurfaceArea());
+        dto.setGrainType(entity.getGrainType().toString());
+        dto.setPlantDate(entity.getPlantDate().format(dateFormat));
+        dto.setExpectedHarvestDate(entity.getExpectedHarvestDate().format(dateFormat));
+        dto.setHumidity(entity.getWeatherInfo().getHumidity());
+        dto.setWindSpeed(entity.getWeatherInfo().getWindSpeed());
+        dto.setFieldColor(String.valueOf(entity.getFieldColor().getRGB()));
+
+        return dto;
     }
 
     public FieldInfoEntity dtoToInfo(FieldInfoDto dto) {
@@ -45,13 +54,14 @@ public class FieldInfoMapper {
         WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(fieldEntity.getCoordinates().getFirst());
 
         return FieldInfoEntity.builder()
+                .fieldId(fieldEntity.getId())
                 .field(fieldEntity)
                 .surfaceArea(dto.getSurfaceArea())
-                .grainType(dto.getGrainType())
-                .plantDate(dto.getPlantDate())
-                .expectedHarvestDate(dto.getExpectedHarvestDate())
+                .grainType(Grain.valueOf(dto.getGrainType()))
+                .plantDate(LocalDate.parse(dto.getPlantDate(), dateFormat))
+                .expectedHarvestDate(LocalDate.parse(dto.getExpectedHarvestDate(), dateFormat))
                 .weatherInfo(weatherInfo)
-                .fieldColor(dto.getFieldColor())
+                .fieldColor(Color.decode(dto.getFieldColor()))
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,17 +19,20 @@ public class FieldInfoEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
+    private String fieldId;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "field_id", referencedColumnName = "id")
+    @JoinColumn(name = "field", referencedColumnName = "id")
     private FieldEntity field;
 
     private Double surfaceArea;
 
+    @Enumerated(EnumType.STRING)
     private Grain grainType;
 
-    private Date plantDate;
+    private LocalDate plantDate;
 
-    private Date expectedHarvestDate;
+    private LocalDate expectedHarvestDate;
 
     private WeatherInfoEntity weatherInfo;
 

@@ -23,8 +23,10 @@ public class FieldEntity {
     @CollectionTable(name = "field_points", joinColumns = @JoinColumn(name = "field_id"))
     private List<PointEntity> coordinates;
 
+//    todo move area only to fieldInfo
     private Double area;
 
-    @OneToOne(mappedBy = "field_entities")
+    @OneToOne
+    @JoinColumn(name = "field_info_id")
     private FieldInfoEntity fieldInfo;
 }
