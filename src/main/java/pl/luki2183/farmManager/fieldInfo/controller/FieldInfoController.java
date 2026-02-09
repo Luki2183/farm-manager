@@ -45,9 +45,9 @@ public class FieldInfoController {
         return putService.updateInfo(dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{fieldId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFieldInfoById(@PathVariable String id) {
-        deleteService.deleteById(id);
+    public void deleteFieldInfoById(@PathVariable String fieldId) {
+        deleteService.deleteById(fieldId);
     }
 }
