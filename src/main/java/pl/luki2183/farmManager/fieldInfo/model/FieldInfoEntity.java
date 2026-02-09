@@ -1,8 +1,8 @@
 package pl.luki2183.farmManager.fieldInfo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import pl.luki2183.farmManager.fields.model.FieldEntity;
 
 import java.awt.*;
 import java.util.Date;
@@ -12,11 +12,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "field_info_entities")
 public class FieldInfoEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
-    private String fieldId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "field_id", referencedColumnName = "id")
+    private FieldEntity field;
 
     private Double surfaceArea;
 
@@ -26,9 +30,7 @@ public class FieldInfoEntity {
 
     private Date expectedHarvestDate;
 
-    private Double humidity;
-
-    private Double windSpeed;
+    private WeatherInfoEntity weatherInfo;
 
     private Color fieldColor;
 }

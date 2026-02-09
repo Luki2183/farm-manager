@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 
 import java.util.List;
 
@@ -12,8 +13,10 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "field_entities")
 public class FieldEntity {
     @Id
+    @Column(name = "id")
     private String id;
 
     @ElementCollection
@@ -21,4 +24,7 @@ public class FieldEntity {
     private List<PointEntity> coordinates;
 
     private Double area;
+
+    @OneToOne(mappedBy = "field_entities")
+    private FieldInfoEntity fieldInfo;
 }
