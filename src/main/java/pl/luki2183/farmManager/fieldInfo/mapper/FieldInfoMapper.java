@@ -23,8 +23,6 @@ import java.util.List;
 @AllArgsConstructor
 public class FieldInfoMapper {
 
-    private final WeatherGetService weatherGetService;
-    private final FieldRepository fieldRepository;
     private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public List<FieldInfoDto> infoToDtoList(List<FieldInfoEntity> all) {
@@ -47,20 +45,16 @@ public class FieldInfoMapper {
         return dto;
     }
 
-    public FieldInfoEntity dtoToInfo(FieldInfoDto dto) {
+    public FieldInfoEntity dtoToInfo(FieldInfoDto dto, FieldEntity entityToBind, WeatherInfoEntity weatherInfoToBind) {
 //        todo expectedHarvestDate = automatic update with internal logic
-        FieldEntity fieldEntity = fieldRepository.getReferenceById(dto.getFieldId());
-
-        WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(fieldEntity.getCoordinates().getFirst());
-
         return FieldInfoEntity.builder()
-                .fieldId(fieldEntity.getId())
-                .field(fieldEntity)
+                .fieldId(entityToBind.getId())
+                .field(entityToBind)
                 .surfaceArea(dto.getSurfaceArea())
                 .grainType(Grain.valueOf(dto.getGrainType()))
                 .plantDate(LocalDate.parse(dto.getPlantDate(), dateFormat))
                 .expectedHarvestDate(LocalDate.parse(dto.getExpectedHarvestDate(), dateFormat))
-                .weatherInfo(weatherInfo)
+                .weatherInfo(weatherInfoToBind)
                 .fieldColor(Color.decode(dto.getFieldColor()))
                 .build();
     }
