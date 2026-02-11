@@ -9,6 +9,8 @@ import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
 import pl.luki2183.farmManager.fieldInfo.utils.FieldInfoUpdateHelper;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class FieldInfoPutService {
@@ -18,8 +20,8 @@ public class FieldInfoPutService {
 
     @Transactional
     public FieldInfoEntity updateInfo(FieldInfoDto dto) {
-        if (!repository.existsByFieldId(dto.getFieldId())) throw new FieldInfoNotFoundException();
-        FieldInfoEntity existingEntity = repository.findByFieldId(dto.getFieldId());
-        return helper.update(existingEntity, dto);
+        Optional<FieldInfoEntity> existingEntity = repository.findByFieldId(dto.getFieldId());
+        if (existingEntity.isEmpty()) throw new FieldInfoNotFoundException();
+        return helper.update(existingEntity.get(), dto);
     }
 }

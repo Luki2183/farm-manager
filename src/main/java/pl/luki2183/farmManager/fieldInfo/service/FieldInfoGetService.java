@@ -9,6 +9,7 @@ import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
 import pl.luki2183.farmManager.exception.FieldInfoNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +23,8 @@ public class FieldInfoGetService {
     }
 
     public FieldInfoDto getInfoByFieldId(String fieldId) {
-        FieldInfoEntity entity = repository.findByFieldId(fieldId);
-        if (entity == null) throw new FieldInfoNotFoundException();
-        return mapper.infoToDto(entity);
+        Optional<FieldInfoEntity> entity = repository.findByFieldId(fieldId);
+        if (entity.isEmpty()) throw new FieldInfoNotFoundException();
+        return mapper.infoToDto(entity.get());
     }
 }

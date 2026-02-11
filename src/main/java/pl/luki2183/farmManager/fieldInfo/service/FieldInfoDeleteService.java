@@ -7,6 +7,8 @@ import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
 import pl.luki2183.farmManager.exception.FieldInfoNotFoundException;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class FieldInfoDeleteService {
@@ -15,8 +17,8 @@ public class FieldInfoDeleteService {
 
     @Transactional
     public void deleteById(String fieldId) {
-        FieldInfoEntity entity = repository.findByFieldId(fieldId);
-        if (entity == null) throw new FieldInfoNotFoundException();
-        repository.delete(entity);
+        Optional<FieldInfoEntity> entity = repository.findByFieldId(fieldId);
+        if (entity.isEmpty()) throw new FieldInfoNotFoundException();
+        repository.delete(entity.get());
     }
 }
