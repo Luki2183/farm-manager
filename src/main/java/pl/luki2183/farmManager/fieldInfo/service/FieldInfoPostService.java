@@ -27,7 +27,6 @@ public class FieldInfoPostService {
     public FieldInfoEntity addInfo(FieldInfoDto dto) {
         if (repository.existsByFieldId(dto.getFieldId())) throw new PrimaryKeyViolationException();
         FieldEntity fieldEntity = fieldFinder.find(dto.getFieldId());
-//        todo reformat to not use weatherGetService in another service
         WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(fieldEntity.getCoordinates().getFirst());
         FieldInfoEntity entity = mapper.dtoToInfo(dto, fieldEntity, weatherInfo);
         fieldEntity.setFieldInfo(entity);
