@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @Component
 @AllArgsConstructor
-public class FieldInfoUpdate {
+public class FieldInfoUpdateHelper {
 
     private final DateFormat dateFormat;
 

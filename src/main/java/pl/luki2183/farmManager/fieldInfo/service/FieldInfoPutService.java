@@ -5,22 +5,21 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.exception.FieldInfoNotFoundException;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
-import pl.luki2183.farmManager.fieldInfo.mapper.FieldInfoMapper;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
-import pl.luki2183.farmManager.fieldInfo.utils.FieldInfoUpdate;
+import pl.luki2183.farmManager.fieldInfo.utils.FieldInfoUpdateHelper;
 
 @Service
 @AllArgsConstructor
 public class FieldInfoPutService {
 
     private final FieldInfoRepository repository;
-    private final FieldInfoUpdate fieldInfoUpdate;
+    private final FieldInfoUpdateHelper helper;
 
     @Transactional
     public FieldInfoEntity updateInfo(FieldInfoDto dto) {
         if (!repository.existsByFieldId(dto.getFieldId())) throw new FieldInfoNotFoundException();
         FieldInfoEntity existingEntity = repository.findByFieldId(dto.getFieldId());
-        return fieldInfoUpdate.update(existingEntity, dto);
+        return helper.update(existingEntity, dto);
     }
 }
