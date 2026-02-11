@@ -17,7 +17,7 @@ public class FieldFinder implements Finder<FieldEntity, String> {
 
     @Override
     public FieldEntity find(String id) {
-        Optional<FieldEntity> fieldEntityOptional = repository.findById(id);
+        Optional<FieldEntity> fieldEntityOptional = repository.findByFieldId(id);
         if (fieldEntityOptional.isEmpty()) throw new FieldEntityNotFoundException();
         return fieldEntityOptional.get();
     }

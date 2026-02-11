@@ -1,5 +1,6 @@
 package pl.luki2183.farmManager.fieldInfo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
@@ -16,13 +17,14 @@ import java.time.LocalDate;
 @Table(name = "field_info_entities")
 public class FieldInfoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // NEED TO DELETE THIS IN ORDER TO UPDATE BY POST METHOD
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     private String fieldId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "field", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "field")
+    @JsonManagedReference
     private FieldEntity field;
 
     private Double surfaceArea;

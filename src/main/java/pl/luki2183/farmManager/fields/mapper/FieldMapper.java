@@ -18,7 +18,7 @@ public class FieldMapper {
 
     public GeoJSONDto fieldToGeoJSONDto(FieldEntity field) {
         GeoJSONDto result = new GeoJSONDto();
-        result.setId(field.getId());
+        result.setId(field.getFieldId());
         GeoJSONDto.Geometry geometry = new GeoJSONDto.Geometry();
         List<double[]> points = field.getCoordinates().stream().map(pointEntity -> {
             double[] array = new double[2];
@@ -39,7 +39,7 @@ public class FieldMapper {
 
     private FieldDto fieldToDto(FieldEntity fieldEntity) {
         FieldDto result = new FieldDto();
-        result.setId(fieldEntity.getId());
+        result.setId(fieldEntity.getFieldId());
         result.setCoordinates(
                 fieldEntity.getCoordinates().stream().map(pointEntity -> {
                     PointDto pointDto = new PointDto();
@@ -55,7 +55,7 @@ public class FieldMapper {
     public FieldEntity geoJSONDtoToFieldEntity(GeoJSONDto dto) {
         FieldEntity entity = new FieldEntity();
 
-        entity.setId(dto.getId());
+        entity.setFieldId(dto.getId());
 
         entity.setCoordinates(
                 dto.getGeometry().getCoordinates().getFirst().stream()

@@ -1,5 +1,6 @@
 package pl.luki2183.farmManager.fields.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +17,10 @@ import java.util.List;
 @Table(name = "field_entities")
 public class FieldEntity {
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+
+    private String fieldId;
 
     @ElementCollection
     @CollectionTable(name = "field_points", joinColumns = @JoinColumn(name = "field_id"))
@@ -26,7 +29,8 @@ public class FieldEntity {
 //    todo move area only to fieldInfo
     private Double area;
 
-    @OneToOne
-    @JoinColumn(name = "field_info_id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "field_info")
+    @JsonBackReference
     private FieldInfoEntity fieldInfo;
 }

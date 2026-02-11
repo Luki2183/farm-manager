@@ -30,6 +30,7 @@ public class FieldInfoPostService {
 //        todo reformat to not use weatherGetService in another service
         WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(fieldEntity.getCoordinates().getFirst());
         FieldInfoEntity entity = mapper.dtoToInfo(dto, fieldEntity, weatherInfo);
+        fieldEntity.setFieldInfo(entity);
         return repository.save(entity);
     }
 }

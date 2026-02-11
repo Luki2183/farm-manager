@@ -1,6 +1,5 @@
 package pl.luki2183.farmManager.fields.service;
 
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,6 @@ public class FieldDeleteService {
 
     @Transactional
     public void deleteFieldById(String id) {
-        repository.deleteById(id);
+        repository.deleteByFieldId(id);
     }
 }

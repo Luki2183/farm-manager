@@ -45,7 +45,7 @@ public class FieldInfoMapper {
     public FieldInfoEntity dtoToInfo(FieldInfoDto dto, FieldEntity entityToBind, WeatherInfoEntity weatherInfoToBind) {
 //        todo expectedHarvestDate = automatic update with internal logic
         return FieldInfoEntity.builder()
-                .fieldId(entityToBind.getId())
+                .fieldId(entityToBind.getFieldId())
                 .field(entityToBind)
                 .surfaceArea(dto.getSurfaceArea())
                 .grainType(Grain.valueOf(dto.getGrainType()))
