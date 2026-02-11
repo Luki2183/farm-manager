@@ -3,6 +3,7 @@ package pl.luki2183.farmManager.fields.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.luki2183.farmManager.exception.PrimaryKeyViolationException;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
@@ -17,6 +18,7 @@ public class FieldPostService {
 
     @Transactional
     public FieldEntity saveField(GeoJSONDto dto){
+        if (repository.existsByFieldId(dto.getId())) throw new PrimaryKeyViolationException();
         FieldEntity entity = mapper.geoJSONDtoToFieldEntity(dto);
         return repository.save(entity);
     }

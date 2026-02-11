@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface FieldRepository extends JpaRepository<FieldEntity, String>{
     Optional<FieldEntity> findByFieldId(String fieldId);
 
-    void deleteByFieldId(String fieldId);
+    boolean existsByFieldId(String id);
 }
