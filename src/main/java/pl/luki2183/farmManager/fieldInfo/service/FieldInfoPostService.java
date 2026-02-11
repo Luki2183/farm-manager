@@ -3,6 +3,7 @@ package pl.luki2183.farmManager.fieldInfo.service;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.luki2183.farmManager.exception.PrimaryKeyViolationException;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.mapper.FieldInfoMapper;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
@@ -24,6 +25,7 @@ public class FieldInfoPostService {
 
     @Transactional
     public FieldInfoEntity addInfo(FieldInfoDto dto) {
+        if (repository.existsByFieldId(dto.getFieldId())) throw new PrimaryKeyViolationException();
         FieldEntity fieldEntity = fieldFinder.find(dto.getFieldId());
 //        todo reformat to not use weatherGetService in another service
         WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(fieldEntity.getCoordinates().getFirst());

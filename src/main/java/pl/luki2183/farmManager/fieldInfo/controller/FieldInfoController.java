@@ -39,7 +39,7 @@ public class FieldInfoController {
         return postService.addInfo(dto);
     }
 
-    @PutMapping
+    @PutMapping("/{fieldId}")
     @ResponseStatus(HttpStatus.OK)
     public FieldInfoEntity updateFieldInfo(@RequestBody FieldInfoDto dto) {
         return putService.updateInfo(dto);
