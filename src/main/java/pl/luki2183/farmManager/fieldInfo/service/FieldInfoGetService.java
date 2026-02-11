@@ -6,7 +6,7 @@ import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.mapper.FieldInfoMapper;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
-import pl.luki2183.farmManager.fieldInfo.utility.FieldInfoNotFoundException;
+import pl.luki2183.farmManager.fieldInfo.utils.FieldInfoNotFoundException;
 
 import java.util.List;
 
