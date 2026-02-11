@@ -27,7 +27,6 @@ public class FieldController {
         return getService.getAllFields();
     }
 
-//    todo separate into post and put mapping
     @PostMapping
     public FieldEntity addField(@RequestBody GeoJSONDto dto){
         return postService.saveField(dto);

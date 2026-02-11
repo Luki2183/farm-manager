@@ -1,3 +1,5 @@
+// todo fix savePolygon to also use PutMapping
+// todo add FieldInfo compatibility
 let map;
 let draw;
 let selectedFeatureId = null;
