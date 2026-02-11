@@ -1,4 +1,4 @@
-package pl.luki2183.farmManager.fieldInfo.utils;
+package pl.luki2183.farmManager.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

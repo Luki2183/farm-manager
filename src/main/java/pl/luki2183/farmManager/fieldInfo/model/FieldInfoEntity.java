@@ -3,10 +3,10 @@ package pl.luki2183.farmManager.fieldInfo.model;
 import jakarta.persistence.*;
 import lombok.*;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
+import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
 import java.awt.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter @Setter

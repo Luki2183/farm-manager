@@ -6,14 +6,10 @@ import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
-import pl.luki2183.farmManager.fieldInfo.model.WeatherInfoEntity;
-import pl.luki2183.farmManager.fieldInfo.service.WeatherGetService;
+import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
-import pl.luki2183.farmManager.fields.repo.FieldRepository;
-import pl.luki2183.farmManager.fields.service.FieldGetService;
 
 import java.awt.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;

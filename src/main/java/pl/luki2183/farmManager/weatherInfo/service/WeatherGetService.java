@@ -1,8 +1,8 @@
-package pl.luki2183.farmManager.fieldInfo.service;
+package pl.luki2183.farmManager.weatherInfo.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.fieldInfo.model.WeatherInfoEntity;
+import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.fields.model.PointEntity;
 
 @Service

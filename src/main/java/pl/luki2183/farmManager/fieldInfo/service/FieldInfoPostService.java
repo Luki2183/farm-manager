@@ -6,10 +6,11 @@ import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.mapper.FieldInfoMapper;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
-import pl.luki2183.farmManager.fieldInfo.model.WeatherInfoEntity;
+import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
+import pl.luki2183.farmManager.weatherInfo.service.WeatherGetService;
 
 @Service
 @AllArgsConstructor
