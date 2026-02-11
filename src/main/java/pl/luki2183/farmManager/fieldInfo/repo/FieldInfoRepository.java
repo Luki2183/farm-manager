@@ -6,4 +6,6 @@ import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 
 public interface FieldInfoRepository extends JpaRepository<FieldInfoEntity, String> {
     FieldInfoEntity findByFieldId(String fieldId);
+
+    boolean existsByFieldId(String fieldId);
 }
