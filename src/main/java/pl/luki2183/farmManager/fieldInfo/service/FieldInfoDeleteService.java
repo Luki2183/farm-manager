@@ -1,5 +1,6 @@
 package pl.luki2183.farmManager.fieldInfo.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.fieldInfo.mapper.FieldInfoMapper;
@@ -13,6 +14,7 @@ public class FieldInfoDeleteService {
 
     private final FieldInfoRepository repository;
 
+    @Transactional
     public void deleteById(String fieldId) {
         FieldInfoEntity entity = repository.findByFieldId(fieldId);
         if (entity == null) throw new FieldInfoNotFoundException("FieldInfoEntity not found with fieldId = ".concat(fieldId));

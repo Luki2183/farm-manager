@@ -1,5 +1,6 @@
 package pl.luki2183.farmManager.fields.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
@@ -14,6 +15,7 @@ public class FieldPostService {
     private final FieldRepository repository;
     private final FieldMapper mapper;
 
+    @Transactional
     public FieldEntity saveField(GeoJSONDto dto){
         FieldEntity entity = mapper.geoJSONDtoToFieldEntity(dto);
         return repository.save(entity);

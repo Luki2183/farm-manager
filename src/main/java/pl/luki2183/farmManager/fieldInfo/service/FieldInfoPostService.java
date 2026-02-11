@@ -1,5 +1,6 @@
 package pl.luki2183.farmManager.fieldInfo.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
@@ -19,6 +20,7 @@ public class FieldInfoPostService {
     private final WeatherGetService weatherGetService;
     private final FieldInfoMapper mapper;
 
+    @Transactional
     public FieldInfoEntity addInfo(FieldInfoDto dto) {
         FieldEntity fieldEntity = fieldRepository.getReferenceById(dto.getFieldId());
         WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(fieldEntity.getCoordinates().getFirst());
