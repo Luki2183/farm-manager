@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
+import pl.luki2183.farmManager.fieldInfo.utils.ColorParser;
+import pl.luki2183.farmManager.utils.DateFormat;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 
@@ -19,7 +21,8 @@ import java.util.List;
 @AllArgsConstructor
 public class FieldInfoMapper {
 
-    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateFormat dateFormat;
+    private final ColorParser colorParser;
 
     public List<FieldInfoDto> infoToDtoList(List<FieldInfoEntity> all) {
         return all.stream()
@@ -32,11 +35,11 @@ public class FieldInfoMapper {
         dto.setFieldId(entity.getFieldId());
         dto.setSurfaceArea(entity.getSurfaceArea());
         dto.setGrainType(entity.getGrainType().toString());
-        dto.setPlantDate(entity.getPlantDate().format(dateFormat));
-        dto.setExpectedHarvestDate(entity.getExpectedHarvestDate().format(dateFormat));
+        dto.setPlantDate(entity.getPlantDate().format(dateFormat.getDateFormat()));
+        dto.setExpectedHarvestDate(entity.getExpectedHarvestDate().format(dateFormat.getDateFormat()));
         dto.setHumidity(entity.getWeatherInfo().getHumidity());
         dto.setWindSpeed(entity.getWeatherInfo().getWindSpeed());
-        dto.setFieldColor(String.valueOf(entity.getFieldColor().getRGB()));
+        dto.setFieldColor(entity.getFieldColor().toString());
 
         return dto;
     }
@@ -48,10 +51,10 @@ public class FieldInfoMapper {
                 .field(entityToBind)
                 .surfaceArea(dto.getSurfaceArea())
                 .grainType(Grain.valueOf(dto.getGrainType()))
-                .plantDate(LocalDate.parse(dto.getPlantDate(), dateFormat))
-                .expectedHarvestDate(LocalDate.parse(dto.getExpectedHarvestDate(), dateFormat))
+                .plantDate(LocalDate.parse(dto.getPlantDate(), dateFormat.getDateFormat()))
+                .expectedHarvestDate(LocalDate.parse(dto.getExpectedHarvestDate(), dateFormat.getDateFormat()))
                 .weatherInfo(weatherInfoToBind)
-                .fieldColor(Color.decode(dto.getFieldColor()))
+                .fieldColor(colorParser.parse(dto.getFieldColor()))
                 .build();
     }
 }
