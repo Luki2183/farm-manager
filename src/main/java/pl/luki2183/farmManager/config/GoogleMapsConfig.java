@@ -1,4 +1,4 @@
-package pl.luki2183.farmManager.fields.config;
+package pl.luki2183.farmManager.config;
 
 import lombok.Getter;
 import lombok.Setter;
