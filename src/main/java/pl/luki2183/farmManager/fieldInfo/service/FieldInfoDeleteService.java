@@ -16,7 +16,7 @@ public class FieldInfoDeleteService {
     @Transactional
     public void deleteById(String fieldId) {
         FieldInfoEntity entity = repository.findByFieldId(fieldId);
-        if (entity == null) throw new FieldInfoNotFoundException("FieldInfoEntity not found with fieldId = ".concat(fieldId));
+        if (entity == null) throw new FieldInfoNotFoundException();
         repository.delete(entity);
     }
 }

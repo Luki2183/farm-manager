@@ -23,7 +23,7 @@ public class FieldInfoGetService {
 
     public FieldInfoDto getInfoByFieldId(String fieldId) {
         FieldInfoEntity entity = repository.findByFieldId(fieldId);
-        if (entity == null) throw new FieldInfoNotFoundException("FieldInfoEntity not found with fieldId = ".concat(fieldId));
+        if (entity == null) throw new FieldInfoNotFoundException();
         return mapper.infoToDto(entity);
     }
 }
