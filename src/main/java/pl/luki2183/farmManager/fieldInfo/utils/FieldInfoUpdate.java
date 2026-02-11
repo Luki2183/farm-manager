@@ -4,12 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
-import pl.luki2183.farmManager.fieldInfo.model.Color;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 import pl.luki2183.farmManager.utils.DateFormat;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
+import java.awt.*;
 import java.time.LocalDate;
 
 @Component
@@ -17,7 +17,6 @@ import java.time.LocalDate;
 public class FieldInfoUpdate {
 
     private final DateFormat dateFormat;
-    private final ColorParser colorParser;
 
     @Transactional
     public FieldInfoEntity update(FieldInfoEntity entity, FieldInfoDto dto) {
@@ -29,7 +28,7 @@ public class FieldInfoUpdate {
         weatherInfo.setHumidity(dto.getHumidity());
         weatherInfo.setWindSpeed(dto.getWindSpeed());
         entity.setWeatherInfo(weatherInfo);
-        entity.setFieldColor(colorParser.parse(dto.getFieldColor()));
+        entity.setFieldColor(Color.decode(dto.getFieldColor()));
         return entity;
     }
 }

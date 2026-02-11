@@ -6,14 +6,13 @@ import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
-import pl.luki2183.farmManager.fieldInfo.utils.ColorParser;
+import pl.luki2183.farmManager.fieldInfo.utils.ColorConverter;
 import pl.luki2183.farmManager.utils.DateFormat;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -22,7 +21,7 @@ import java.util.List;
 public class FieldInfoMapper {
 
     private final DateFormat dateFormat;
-    private final ColorParser colorParser;
+    private final ColorConverter colorConverter;
 
     public List<FieldInfoDto> infoToDtoList(List<FieldInfoEntity> all) {
         return all.stream()
@@ -39,8 +38,7 @@ public class FieldInfoMapper {
         dto.setExpectedHarvestDate(entity.getExpectedHarvestDate().format(dateFormat.getDateFormat()));
         dto.setHumidity(entity.getWeatherInfo().getHumidity());
         dto.setWindSpeed(entity.getWeatherInfo().getWindSpeed());
-        dto.setFieldColor(entity.getFieldColor().toString());
-
+        dto.setFieldColor(colorConverter.toHexString(entity.getFieldColor()));
         return dto;
     }
 
@@ -54,7 +52,7 @@ public class FieldInfoMapper {
                 .plantDate(LocalDate.parse(dto.getPlantDate(), dateFormat.getDateFormat()))
                 .expectedHarvestDate(LocalDate.parse(dto.getExpectedHarvestDate(), dateFormat.getDateFormat()))
                 .weatherInfo(weatherInfoToBind)
-                .fieldColor(colorParser.parse(dto.getFieldColor()))
+                .fieldColor(Color.decode(dto.getFieldColor()))
                 .build();
     }
 }
