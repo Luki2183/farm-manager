@@ -316,6 +316,29 @@ function updateFromHistory(type = "undo") {
     updateFeatureWhenNotNull(previous)
 }
 
+function updateOnlySurfaceAreaOfFieldInfo(feature) {
+    let updateSurfaceAreaStructure = {
+        "fieldId": feature.id,
+        "surfaceArea": calculateArea(feature)
+    }
+
+    fetch(`/api/fieldInfo/${feature.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updateSurfaceAreaStructure)
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to update fieldInfo area with id=%o", feature.id);
+            return response.json();
+        })
+        .then(data => {
+            console.info("Updated fieldInfo area with output=%o", data);
+        })
+        .catch(err => console.error(err));
+}
+
 // Helper function to updateFromHistory(type)
 function updateFeatureWhenNotNull(feature) {
     if (feature !== null && feature !== undefined) {
@@ -325,7 +348,10 @@ function updateFeatureWhenNotNull(feature) {
         else historySequence.push(feature.id)
         draw.addFeatures([feature])
         checkDataBaseForPolygon(feature.id).then(value => {
-            if (value) updatePolygon(feature)
+            if (value) {
+                updatePolygon(feature)
+                updateOnlySurfaceAreaOfFieldInfo(feature)
+            }
             else savePolygon(feature)
         })
     } else
