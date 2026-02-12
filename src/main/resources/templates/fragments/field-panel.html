@@ -6,44 +6,53 @@
             <h2 class="panel-title">Field Details</h2>
 
             <div class="field-group">
-                <label>Surface Area (ha)</label>
+                <label for="surfaceArea">Surface Area (km^2)</label>
                 <input type="number" id="surfaceArea" readonly />
             </div>
 
             <div class="field-group">
-                <label>Grain Type</label>
+                <label for="grainType">Grain Type</label>
                 <select id="grainType">
-                    <option value="">-- Select grain --</option>
-                    <option value="wheat">Wheat</option>
-                    <option value="corn">Corn</option>
-                    <option value="barley">Barley</option>
-                    <option value="rye">Rye</option>
+                    <option value="DEFAULT">-- Select grain --</option>
+                    <option value="WHEAT">Wheat</option>
                 </select>
             </div>
 
             <div class="field-group">
-                <label>Plant Date</label>
+                <label for="plantDate">Plant Date</label>
                 <input type="date" id="plantDate" />
             </div>
 
             <div class="field-group">
-                <label>Expected Harvest Date</label>
+                <label for="expectedHarvestDate">Expected Harvest Date</label>
                 <input type="date" id="expectedHarvestDate" />
             </div>
 
             <div class="field-group">
-                <label>Humidity (%)</label>
+                <label for="humidity">Humidity (%)</label>
                 <input type="number" id="humidity" readonly />
             </div>
 
             <div class="field-group">
-                <label>Wind Speed (km/h)</label>
+                <label for="windSpeed">Wind Speed (km/h)</label>
                 <input type="number" id="windSpeed" readonly />
             </div>
 
             <div class="field-group">
-                <label>Field Color</label>
+                <label for="fieldColor">Field Color</label>
                 <input type="color" id="fieldColor" />
+            </div>
+
+            <div class="field-actions">
+
+                <button type="button" class="panel-btn save-btn" onclick="updateFieldInfo(selectedFeatureId)">
+                    Save FieldInfo
+                </button>
+
+                <button type="button" class="panel-btn refresh-btn" onclick="loadFieldInfo(selectedFeatureId)">
+                    Refresh FieldInfo
+                </button>
+
             </div>
         </div>
     </div>

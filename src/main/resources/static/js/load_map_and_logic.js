@@ -1,5 +1,3 @@
-// todo fix savePolygon to also use PutMapping
-// todo add FieldInfo compatibility
 let map;
 let draw;
 let selectedFeatureId = null;
@@ -74,6 +72,7 @@ async function initMap() {
             // todo fetch fieldInfoData
             geometryCopyOfSelected = structuredClone(draw.getSnapshotFeature(featureId).geometry)
             selectedFeatureId = featureId;
+            loadFieldInfo(featureId)
         })
         draw.on("deselect", () => {
             console.info("Deselected feature with id=%o", selectedFeatureId)
@@ -81,14 +80,49 @@ async function initMap() {
             if (change) addOrUpdateOnFinishOrDeselect(selectedFeatureId)
             selectedFeatureId = null;
             geometryCopyOfSelected = null
+            clearFieldPanel()
         })
         draw.on("finish", (featureId) => {
             addOrUpdateOnFinishOrDeselect(featureId)
         })
 
         loadPolygons()
+        clearFieldPanel()
     })
 
+}
+
+function loadFieldInfo(fieldId) {
+    fetch(`api/fieldInfo/${fieldId}`)
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to load fieldInfo with input=%o", fieldId);
+            return response.json();
+        })
+        .then(data => {
+            console.info("FieldInfo loaded with output=%o", data);
+            fillFieldPanel(data)
+        })
+        .catch(err => console.error(err));
+}
+
+function fillFieldPanel(fieldInfo) {
+    document.getElementById("surfaceArea").value = fieldInfo.surfaceArea ?? "";
+    document.getElementById("grainType").value = fieldInfo.grainType ?? "";
+    document.getElementById("plantDate").value = new Date(fieldInfo.plantDate).toISOString().substring(0, 10);
+    document.getElementById("expectedHarvestDate").value = new Date(fieldInfo.expectedHarvestDate).toISOString().substring(0, 10);
+    document.getElementById("humidity").value = fieldInfo.humidity ?? "";
+    document.getElementById("windSpeed").value = fieldInfo.windSpeed ?? "";
+    document.getElementById("fieldColor").value = fieldInfo.fieldColor ?? "#4CAF50";
+}
+
+function clearFieldPanel() {
+    document.getElementById("surfaceArea").value = "";
+    document.getElementById("grainType").value = "";
+    document.getElementById("plantDate").value = "";
+    document.getElementById("expectedHarvestDate").value = "";
+    document.getElementById("humidity").value = "0";
+    document.getElementById("windSpeed").value = "0";
+    document.getElementById("fieldColor").value = "#0000FF";
 }
 
 function addOrUpdateOnFinishOrDeselect(featureId) {
@@ -108,9 +142,6 @@ async function checkDataBaseForPolygon(id) {
 function savePolygon(feature) {
     console.debug("Entering savePolygon(feature) with input=%o", feature)
 
-    // todo move to fieldInfo
-    // feature['area'] = calculateArea(feature)
-
     fetch("/api/fields", {
         method: "POST",
         headers: {
@@ -124,6 +155,36 @@ function savePolygon(feature) {
         })
         .then(data => {
             console.info("Polygon saved with output=%o", data);
+            createFieldInfo(feature)
+        })
+        .catch(err => console.error(err));
+}
+
+function createFieldInfo(feature) {
+    console.debug("Entering createFieldInfo(feature) with input=%o", feature)
+
+    let basicFieldInfoStructure = {
+        "fieldId": feature.id,
+        "surfaceArea": calculateArea(feature),
+        "grainType": "DEFAULT",
+        "plantDate": new Date().toLocaleDateString('en-CA'),
+        "expectedHarvestDate": new Date().toLocaleDateString('en-CA'),
+        "fieldColor": "#0000FF"
+    }
+
+    fetch("/api/fieldInfo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(basicFieldInfoStructure)
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to create basic fieldInfo");
+            return response.json();
+        })
+        .then(data => {
+            console.info("Created basic fieldInfo with output=%o", data);
         })
         .catch(err => console.error(err));
 }
@@ -143,6 +204,42 @@ function updatePolygon(feature) {
         })
         .then(data => {
             console.info("Polygon updated with output=%o", data);
+            updateFieldInfo(feature.id)
+        })
+        .catch(err => console.error(err));
+}
+
+function updateFieldInfo(featureId) {
+    if (selectedFeatureId === null) {
+        console.warn("Couldn't update FieldInfo with not selected Field")
+        return
+    }
+
+    let feature = draw.getSnapshotFeature(featureId);
+
+    let updateInfoStructure = {
+        "fieldId": feature.id,
+        "surfaceArea": calculateArea(feature),
+        "grainType": document.getElementById("grainType").value,
+        "plantDate": document.getElementById("plantDate").value,
+        "expectedHarvestDate": document.getElementById("expectedHarvestDate").value,
+        "fieldColor": document.getElementById("fieldColor").value
+    }
+
+    fetch(`/api/fieldInfo/${feature.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updateInfoStructure)
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to update fieldInfo with id=%o", feature.id);
+            return response.json();
+        })
+        .then(data => {
+            console.info("Updated fieldInfo with output=%o", data);
+            loadFieldInfo(feature.id)
         })
         .catch(err => console.error(err));
 }

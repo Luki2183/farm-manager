@@ -8,5 +8,5 @@ import java.time.format.DateTimeFormatter;
 @Component
 @Getter
 public class DateFormat {
-    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 }

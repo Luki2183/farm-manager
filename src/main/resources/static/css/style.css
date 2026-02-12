@@ -211,3 +211,45 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+/* FIELD PANEL BUTTONS */
+
+.field-actions {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.panel-btn {
+    height: 42px;
+    border: none;
+    border-radius: 6px;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px;
+}
+
+/* SAVE BUTTON */
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #43a047;
+}
+
+/* REFRESH BUTTON */
+.refresh-btn {
+    background-color: white;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.refresh-btn:hover {
+    background-color: #f1f8f4;
+}

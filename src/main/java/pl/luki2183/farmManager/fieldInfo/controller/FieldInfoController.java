@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
+import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoDeleteService;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoGetService;
@@ -35,13 +36,13 @@ public class FieldInfoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FieldInfoEntity addFieldInfo(@RequestBody FieldInfoDto dto) {
+    public FieldInfoEntity addFieldInfo(@RequestBody FieldInfoUpdateDto dto) {
         return postService.addInfo(dto);
     }
 
     @PutMapping("/{fieldId}")
     @ResponseStatus(HttpStatus.OK)
-    public FieldInfoEntity updateFieldInfo(@RequestBody FieldInfoDto dto) {
+    public FieldInfoEntity updateFieldInfo(@RequestBody FieldInfoUpdateDto dto) {
         return putService.updateInfo(dto);
     }
 

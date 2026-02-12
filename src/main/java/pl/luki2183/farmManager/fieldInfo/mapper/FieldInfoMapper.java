@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
+import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 import pl.luki2183.farmManager.fieldInfo.utils.ColorConverter;
+import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.utils.DateFormat;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
-import pl.luki2183.farmManager.fields.model.FieldEntity;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class FieldInfoMapper {
     public FieldInfoDto infoToDto(FieldInfoEntity entity) {
         FieldInfoDto dto = new FieldInfoDto();
         dto.setFieldId(entity.getFieldId());
-        dto.setSurfaceArea(entity.getSurfaceArea());
+        dto.setSurfaceArea(Math.round(entity.getSurfaceArea()*100.)/100.);
         dto.setGrainType(entity.getGrainType().toString());
         dto.setPlantDate(entity.getPlantDate().format(dateFormat.getDateFormat()));
         dto.setExpectedHarvestDate(entity.getExpectedHarvestDate().format(dateFormat.getDateFormat()));
@@ -42,7 +43,7 @@ public class FieldInfoMapper {
         return dto;
     }
 
-    public FieldInfoEntity dtoToInfo(FieldInfoDto dto, FieldEntity entityToBind, WeatherInfoEntity weatherInfoToBind) {
+    public FieldInfoEntity dtoToInfo(FieldInfoUpdateDto dto, FieldEntity entityToBind, WeatherInfoEntity weatherInfoToBind) {
 //        todo expectedHarvestDate = automatic update with internal logic
         return FieldInfoEntity.builder()
                 .fieldId(entityToBind.getFieldId())
