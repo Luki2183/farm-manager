@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="PL">
+<body>
+    <div id="top-bar" th:fragment="topBar">
+        <div class="top-bar-container">
+            <div class="logo">
+                FarmMap
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-item active">Map</a>
+                <a th:href="@{/fields}" class="nav-item">All Fields Info</a>
+                <a th:href="@{/calculators}" class="nav-item">Calculators</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

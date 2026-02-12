@@ -11,6 +11,7 @@ async function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 52.2297, lng: 21.0122 },
         zoom: 12,
+        streetViewControl: false
     });
 
     google.maps.event.addListenerOnce(map, "projection_changed", () =>{
