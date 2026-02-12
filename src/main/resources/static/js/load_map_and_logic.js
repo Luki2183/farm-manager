@@ -3,6 +3,7 @@ let draw;
 let selectedFeatureId = null;
 let geometryCopyOfSelected = null
 const historyToUndo = new Map()
+const fieldInfoHistory = new Map()
 const historySequence = []
 
 async function initMap() {
@@ -100,6 +101,7 @@ function loadFieldInfo(fieldId) {
         })
         .then(data => {
             console.info("FieldInfo loaded with output=%o", data);
+            fieldInfoHistory.set(fieldId, data);
             fillFieldPanel(data)
         })
         .catch(err => console.error(err));
@@ -139,7 +141,7 @@ async function checkDataBaseForPolygon(id) {
     return response.json();
 }
 
-function savePolygon(feature) {
+function savePolygon(feature, fieldInfo = null) {
     console.debug("Entering savePolygon(feature) with input=%o", feature)
 
     fetch("/api/fields", {
@@ -155,21 +157,21 @@ function savePolygon(feature) {
         })
         .then(data => {
             console.info("Polygon saved with output=%o", data);
-            createFieldInfo(feature)
+            createFieldInfo(feature, fieldInfo)
         })
         .catch(err => console.error(err));
 }
 
-function createFieldInfo(feature) {
+function createFieldInfo(feature, fieldInfo = null) {
     console.debug("Entering createFieldInfo(feature) with input=%o", feature)
 
     let basicFieldInfoStructure = {
         "fieldId": feature.id,
-        "surfaceArea": calculateArea(feature),
-        "grainType": "DEFAULT",
-        "plantDate": new Date().toLocaleDateString('en-CA'),
-        "expectedHarvestDate": new Date().toLocaleDateString('en-CA'),
-        "fieldColor": "#0000FF"
+        "surfaceArea": fieldInfo === null ? calculateArea(feature) : fieldInfo.surfaceArea,
+        "grainType": fieldInfo === null ? "DEFAULT" : fieldInfo.grainType,
+        "plantDate": fieldInfo === null ? new Date().toLocaleDateString('en-CA') : fieldInfo.plantDate,
+        "expectedHarvestDate": fieldInfo === null ? new Date().toLocaleDateString('en-CA') : fieldInfo.expectedHarvestDate,
+        "fieldColor": fieldInfo === null ? "#0000FF" : fieldInfo.fieldColor
     }
 
     fetch("/api/fieldInfo", {
@@ -352,7 +354,9 @@ function updateFeatureWhenNotNull(feature) {
                 updatePolygon(feature)
                 updateOnlySurfaceAreaOfFieldInfo(feature)
             }
-            else savePolygon(feature)
+            else {
+                savePolygon(feature, fieldInfoHistory.get(feature.id))
+            }
         })
     } else
         console.debug("Error when checking update conditions with input=%o", feature)
