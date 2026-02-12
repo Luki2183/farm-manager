@@ -28,7 +28,6 @@ public class FieldMapper {
         }).toList();
         geometry.setCoordinates(List.of(points));
         result.setGeometry(geometry);
-        result.setArea(field.getArea());
         return result;
     }
 
@@ -37,7 +36,7 @@ public class FieldMapper {
                 .map(this::fieldToDto).toList();
     }
 
-    private FieldDto fieldToDto(FieldEntity fieldEntity) {
+    public FieldDto fieldToDto(FieldEntity fieldEntity) {
         FieldDto result = new FieldDto();
         result.setId(fieldEntity.getFieldId());
         result.setCoordinates(
@@ -48,7 +47,6 @@ public class FieldMapper {
                     return pointDto;
                 }).toList()
         );
-        result.setArea(fieldEntity.getArea());
         return result;
     }
 
@@ -66,8 +64,6 @@ public class FieldMapper {
                             return result;
                         }).toList()
         );
-
-        entity.setArea(dto.getArea());
 
         return entity;
     }

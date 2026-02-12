@@ -14,7 +14,6 @@ public class FieldUpdateHelper {
 
     public FieldEntity update(FieldEntity updated, GeoJSONDto dto) {
         FieldEntity entity = mapper.geoJSONDtoToFieldEntity(dto);
-        updated.setArea(entity.getArea());
         updated.setCoordinates(entity.getCoordinates());
         return updated;
     }

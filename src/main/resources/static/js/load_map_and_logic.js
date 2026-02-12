@@ -71,6 +71,7 @@ async function initMap() {
         setMode("select")
         draw.on("select", (featureId) => {
             console.info("Selected feature with id: ", featureId)
+            // todo fetch fieldInfoData
             geometryCopyOfSelected = structuredClone(draw.getSnapshotFeature(featureId).geometry)
             selectedFeatureId = featureId;
         })
@@ -92,14 +93,23 @@ async function initMap() {
 
 function addOrUpdateOnFinishOrDeselect(featureId) {
     let feature = draw.getSnapshotFeature(featureId)
-    savePolygon(feature)
+    checkDataBaseForPolygon(featureId).then(value => {
+        if (value) updatePolygon(feature)
+        else savePolygon(feature)
+    })
     addToHistory(featureId, structuredClone(feature))
+}
+
+async function checkDataBaseForPolygon(id) {
+    const response = await fetch(`/api/fields/exists/${id}`)
+    return response.json();
 }
 
 function savePolygon(feature) {
     console.debug("Entering savePolygon(feature) with input=%o", feature)
 
-    feature['area'] = calculateArea(feature)
+    // todo move to fieldInfo
+    // feature['area'] = calculateArea(feature)
 
     fetch("/api/fields", {
         method: "POST",
@@ -114,6 +124,25 @@ function savePolygon(feature) {
         })
         .then(data => {
             console.info("Polygon saved with output=%o", data);
+        })
+        .catch(err => console.error(err));
+}
+
+function updatePolygon(feature) {
+    console.debug("Entering updatePolygon(feature) with input=%o", feature)
+    fetch(`/api/fields/${feature.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(feature)
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to update polygon with input=%o", feature);
+            return response.json();
+        })
+        .then(data => {
+            console.info("Polygon updated with output=%o", data);
         })
         .catch(err => console.error(err));
 }
@@ -198,7 +227,10 @@ function updateFeatureWhenNotNull(feature) {
         if (draw.hasFeature(feature.id)) draw.removeFeatures([feature.id])
         else historySequence.push(feature.id)
         draw.addFeatures([feature])
-        savePolygon(feature)
+        checkDataBaseForPolygon(feature.id).then(value => {
+            if (value) updatePolygon(feature)
+            else savePolygon(feature)
+        })
     } else
         console.debug("Error when checking update conditions with input=%o", feature)
 }

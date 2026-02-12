@@ -27,6 +27,12 @@ public class FieldController {
         return getService.getAllFields();
     }
 
+    @GetMapping("/{fieldId}")
+    public FieldDto getFieldWithId(@PathVariable String fieldId) { return getService.getFieldWithId(fieldId); }
+
+    @GetMapping("/exists/{fieldId}")
+    public Boolean fieldExists(@PathVariable String fieldId) { return getService.checkIfExistsByFieldId(fieldId); }
+
     @PostMapping
     public FieldEntity addField(@RequestBody GeoJSONDto dto){
         return postService.saveField(dto);

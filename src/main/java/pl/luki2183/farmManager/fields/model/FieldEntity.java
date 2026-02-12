@@ -26,9 +26,6 @@ public class FieldEntity {
     @CollectionTable(name = "field_points", joinColumns = @JoinColumn(name = "field_id"))
     private List<PointEntity> coordinates;
 
-//    todo move area only to fieldInfo
-    private Double area;
-
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "field_info")
     @JsonBackReference
