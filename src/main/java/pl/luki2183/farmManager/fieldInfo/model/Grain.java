@@ -1,7 +1,32 @@
 package pl.luki2183.farmManager.fieldInfo.model;
 
 public enum Grain {
-//    todo fill this record with data
     DEFAULT,
-    WHEAT
+    WHEAT,
+    AFTERCROP,
+    BARLEY,
+    CANOLA,
+    CARROTS,
+    CORN,
+    COTTON,
+    GRAPE,
+    GRASS,
+    GREEN_BEANS,
+    LONG_GRAIN_RICE,
+    OATS,
+    OILSEED_RADISH,
+    OLIVES,
+    ONIONS,
+    PARSNIPS,
+    PEAS,
+    POPLAR,
+    POTATOES,
+    RED_BEETS,
+    RICE,
+    SORGHUM,
+    SOYBEANS,
+    SPINACH,
+    SUGAR_BEET,
+    SUGARCANE,
+    SUNFLOWERS,
 }
