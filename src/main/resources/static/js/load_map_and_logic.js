@@ -115,7 +115,7 @@ function fillFieldPanel(fieldInfo) {
     document.getElementById("humidity").value = fieldInfo.humidity ?? "";
     document.getElementById("windSpeed").value = fieldInfo.windSpeed ?? "";
     document.getElementById("fieldColor").value = fieldInfo.fieldColor ?? "#4CAF50";
-}
+} // todo move logic to backend/replace by thymeleaf
 
 function clearFieldPanel() {
     document.getElementById("surfaceArea").value = "";
