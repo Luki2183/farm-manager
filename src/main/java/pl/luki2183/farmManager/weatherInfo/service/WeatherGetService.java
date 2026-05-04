@@ -12,8 +12,8 @@ public class WeatherGetService {
     public WeatherInfoEntity getWeatherInfo(PointEntity point) {
 //        todo getWeather by lat and lng
         WeatherInfoEntity weatherInfoEntity = new WeatherInfoEntity();
-        weatherInfoEntity.setHumidity(0.0);
-        weatherInfoEntity.setWindSpeed(0.0);
+        weatherInfoEntity.setHumidity(3.5);
+        weatherInfoEntity.setWindSpeed(15.5);
         return weatherInfoEntity;
     }
 }

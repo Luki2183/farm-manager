@@ -12,7 +12,6 @@ async function initMap() {
         zoom: 12,
         streetViewControl: false
     });
-
     google.maps.event.addListenerOnce(map, "projection_changed", () =>{
         draw = new terraDraw.TerraDraw({
             adapter: new terraDrawGoogleMapsAdapter.TerraDrawGoogleMapsAdapter({
@@ -260,6 +259,7 @@ function loadPolygons(){
             features.forEach(feature => {
                 addToHistory(feature.id, structuredClone(feature))
             })
+            setMapCenter()
         })
 }
 
@@ -383,6 +383,33 @@ function addToHistory(featureId, feature) {
     } else {
         historyToUndo.set(featureId, [feature])
     }
+}
+
+function setMapCenter() {
+    let val = document.getElementById("focusedFieldId").value;
+    let feature = draw.getSnapshotFeature(val);
+    if (feature !== undefined) {
+        let coordinatesList = feature.geometry.coordinates[0];
+        console.debug(coordinatesList)
+        let coordinates = getCenterFromArray(coordinatesList);
+        console.debug(coordinates)
+        let latLng = {
+            "lng": coordinates[0],
+            "lat": coordinates[1]
+        }
+        map.setCenter(latLng)
+    }
+}
+
+// Helper function to setMapCenter()
+function getCenterFromArray(arr) {
+    let x = arr.map (function (a){ return a[0] });
+    let y = arr.map (function (a){ return a[1] });
+    let minX = Math.min.apply (null, x);
+    let maxX = Math.max.apply (null, x);
+    let minY = Math.min.apply (null, y);
+    let maxY = Math.max.apply (null, y);
+    return [(minX + maxX) / 2, (minY + maxY) / 2];
 }
 
 // Shortcuts

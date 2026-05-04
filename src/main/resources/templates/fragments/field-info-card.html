@@ -1,49 +1,61 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="PL">
-<body>
-    <div class="field-card" th:fragment="fieldCard(field)">
+<div class="field-card" th:fragment="fieldCard(field)">
 
-        <div class="field-card-container">
+    <div class="field-card-container">
 
-            <h3 class="panel-title" th:text="'Field ' + ${field.fieldId}"></h3>
+        <a class="show-map-btn"
+           th:href="@{/{id}(id=${field.fieldId})}">
+            Show on map
+        </a>
 
-            <div class="field-group">
-                <label>Surface Area</label>
-                <input type="text" th:value="${field.surfaceArea}" readonly>
+        <!-- HEADER -->
+        <h3 class="panel-title">
+            <span th:text="'Field ' + ${field.fieldId}"></span>
+
+            <!-- color dot -->
+            <span class="field-color-dot"
+                  th:style="'background-color:' + ${field.fieldColor}">
+            </span>
+        </h3>
+
+        <!-- GRID -->
+        <div class="field-grid">
+
+            <div class="grid-item">
+                <label>Surface</label>
+                <span th:text="${field.surfaceArea} + ' ha'"></span>
             </div>
 
-            <div class="field-group">
-                <label>Grain Type</label>
-                <input type="text" th:value="${field.grainType}" readonly>
-            </div>
-
-            <div class="field-group">
+            <div class="grid-item">
                 <label>Plant Date</label>
-                <input type="text" th:value="${field.plantDate}" readonly>
+                <span th:text="${field.plantDate}"></span>
             </div>
 
-            <div class="field-group">
-                <label>Expected Harvest</label>
-                <input type="text" th:value="${field.expectedHarvestDate}" readonly>
-            </div>
-
-            <div class="field-group">
+            <div class="grid-item humidity-cell">
                 <label>Humidity</label>
-                <input type="text" th:value="${field.humidity}" readonly>
+
+                <div class="humidity-circle"
+                     th:style="'--value:' + (${field.humidity} > 100 ? 100 : ${field.humidity})">
+                    <span th:text="${field.humidity} + '%'"></span>
+                </div>
             </div>
 
-            <div class="field-group">
-                <label>Wind Speed</label>
-                <input type="text" th:value="${field.windSpeed}" readonly>
+            <div class="grid-item">
+                <label>Grain</label>
+                <span th:text="${field.grainType}"></span>
             </div>
 
-            <div class="field-group">
-                <label>Field Color</label>
-                <input type="color" th:value="${field.fieldColor}" disabled>
+            <div class="grid-item">
+                <label>Harvest</label>
+                <span th:text="${field.expectedHarvestDate}"></span>
+            </div>
+
+            <div class="grid-item">
+                <label>Wind</label>
+                <span th:text="${field.windSpeed} + ' m/s'"></span>
             </div>
 
         </div>
 
     </div>
-</body>
-</html>
+
+</div>
