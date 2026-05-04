@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="PL">
+<body>
+    <div class="field-card" th:fragment="fieldCard(field)">
+
+        <div class="field-card-container">
+
+            <h3 class="panel-title" th:text="'Field ' + ${field.fieldId}"></h3>
+
+            <div class="field-group">
+                <label>Surface Area</label>
+                <input type="text" th:value="${field.surfaceArea}" readonly>
+            </div>
+
+            <div class="field-group">
+                <label>Grain Type</label>
+                <input type="text" th:value="${field.grainType}" readonly>
+            </div>
+
+            <div class="field-group">
+                <label>Plant Date</label>
+                <input type="text" th:value="${field.plantDate}" readonly>
+            </div>
+
+            <div class="field-group">
+                <label>Expected Harvest</label>
+                <input type="text" th:value="${field.expectedHarvestDate}" readonly>
+            </div>
+
+            <div class="field-group">
+                <label>Humidity</label>
+                <input type="text" th:value="${field.humidity}" readonly>
+            </div>
+
+            <div class="field-group">
+                <label>Wind Speed</label>
+                <input type="text" th:value="${field.windSpeed}" readonly>
+            </div>
+
+            <div class="field-group">
+                <label>Field Color</label>
+                <input type="color" th:value="${field.fieldColor}" disabled>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="PL">
+<head>
+    <meta charset="UTF-8">
+    <title>Fields Info</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- TOP BAR -->
+    <div th:replace="~{fragments/top-bar :: topBar}"></div>
+    <!-- RIGHT FILTER PANEL -->
+    <div th:replace="~{fragments/filters-panel :: filtersPanel}"></div>
+    <!-- LEFT CONTENT -->
+    <div id="fields-container">
+        <div class="fields-list">
+            <div th:each="field : ${fields}">
+                <div th:replace="~{fragments/field-info-card :: fieldCard(field=${field})}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
