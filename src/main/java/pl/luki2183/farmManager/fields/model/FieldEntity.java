@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class FieldEntity {
 
     private String fieldId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "field_points", joinColumns = @JoinColumn(name = "field_id"))
     private List<PointEntity> coordinates;
 

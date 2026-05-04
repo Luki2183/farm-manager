@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <script th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${@googleMapsConfig.getKey()} + '&loading=async&callback=initMap'}"></script>
+    <script th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${@googleConfig.getKey()} + '&loading=async&callback=initMap'}"></script>
 
     <script src="https://unpkg.com/terra-draw@1.2.0/dist/terra-draw.umd.js"></script>
     <script src="https://unpkg.com/terra-draw-google-maps-adapter@1.1.2/dist/terra-draw-google-maps-adapter.umd.js"></script>

@@ -27,4 +27,12 @@ public class FieldInfoUpdateHelper {
         if (dto.getFieldColor() != null && !dto.getFieldColor().isBlank()) entity.setFieldColor(Color.decode(dto.getFieldColor()));
         return entity;
     }
+
+    @Transactional
+    public FieldInfoEntity updateWeatherInfo(FieldInfoEntity existing, WeatherInfoEntity entity) {
+        if (entity.getHumidity() != null && entity.getWindSpeed() != null) {
+            existing.setWeatherInfo(entity);
+        }
+        return existing;
+    }
 }

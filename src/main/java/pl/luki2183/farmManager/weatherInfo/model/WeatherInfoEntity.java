@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Embeddable
 public class WeatherInfoEntity {
-    private Double humidity;
+    private Integer humidity;
     private Double windSpeed;
 }

@@ -22,8 +22,8 @@ public class FieldMapper {
         GeoJSONDto.Geometry geometry = new GeoJSONDto.Geometry();
         List<double[]> points = field.getCoordinates().stream().map(pointEntity -> {
             double[] array = new double[2];
-            array[0] = pointEntity.getLat();
-            array[1] = pointEntity.getLng();
+            array[0] = pointEntity.getLng();
+            array[1] = pointEntity.getLat();
             return array;
         }).toList();
         geometry.setCoordinates(List.of(points));
@@ -59,8 +59,8 @@ public class FieldMapper {
                 dto.getGeometry().getCoordinates().getFirst().stream()
                         .map(doubles -> {
                             PointEntity result = new PointEntity();
-                            result.setLat(doubles[0]);
-                            result.setLng(doubles[1]);
+                            result.setLat(doubles[1]);
+                            result.setLng(doubles[0]);
                             return result;
                         }).toList()
         );
