@@ -42,7 +42,7 @@
 
             <div class="grid-item">
                 <label>Grain</label>
-                <span th:text="${field.grainType}"></span>
+                <span th:text="${#strings.capitalize(#strings.toLowerCase(field.grainType)).replaceAll('_', ' ')}"></span>
             </div>
 
             <div class="grid-item">
