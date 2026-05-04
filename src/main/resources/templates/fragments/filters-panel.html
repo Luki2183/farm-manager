@@ -6,64 +6,56 @@
 
             <h2 class="panel-title">Filters</h2>
 
-            <div class="field-group">
-                <label>Grain Type</label>
-                <select name="grainType">
-                    <option value="DEFAULT">-- Select grain --</option>
-                    <option value="WHEAT">Wheat</option>
-                    <option value="AFTERCROP">Aftercrop</option>
-                    <option value="BARLEY">Barley</option>
-                    <option value="CANOLA">Canola</option>
-                    <option value="CARROTS">Carrots</option>
-                    <option value="CORN">Corn</option>
-                    <option value="COTTON">Cotton</option>
-                    <option value="GRAPE">Grape</option>
-                    <option value="GRASS">Grass</option>
-                    <option value="GREEN_BEANS">Green Beans</option>
-                    <option value="LONG_GRAIN_RICE">Long Grain Rice</option>
-                    <option value="OATS">Oats</option>
-                    <option value="OILSEED_RADISH">Oilseed Radish</option>
-                    <option value="OLIVES">Olives</option>
-                    <option value="ONIONS">Onions</option>
-                    <option value="PARSNIPS">Parsnips</option>
-                    <option value="PEAS">Peas</option>
-                    <option value="POPLAR">Poplar</option>
-                    <option value="POTATOES">Potatoes</option>
-                    <option value="RED_BEETS">Red Beets</option>
-                    <option value="RICE">Rice</option>
-                    <option value="SORGHUM">Sorghum</option>
-                    <option value="SOYBEANS">Soybeans</option>
-                    <option value="SPINACH">Spinach</option>
-                    <option value="SUGAR_BEET">Sugar Beet</option>
-                    <option value="SUGARCANE">Sugarcane</option>
-                    <option value="SUNFLOWERS">Sunflowers</option>
-                </select>
-            </div>
+            <form method="get" th:action="@{/fieldsInfo}">
 
-            <div class="field-group">
-                <label>Min Area</label>
-                <input type="number" name="minArea">
-            </div>
+                <div class="field-group">
+                    <label>Grain Type</label>
+                    <label>
+                        <select name="grainType" th:value="${param.grainType}">
+                            <option th:value=null>-- Select grain --</option>
+                            <option th:each="grain : ${grainTypes}"
+                                    th:value="${grain}"
+                                    th:text="${#strings.capitalize(#strings.toLowerCase(grain)).replaceAll('_', ' ')}"
+                                    th:selected="${grain == grainType}">
+                            </option>
+                        </select>
+                    </label>
+                </div>
 
-            <div class="field-group">
-                <label>Max Area</label>
-                <input type="number" name="maxArea">
-            </div>
+                <div class="field-group">
+                    <label>Min Area</label>
+                    <label>
+                        <input type="number" name="minArea" th:value="${param.minArea}">
+                    </label>
+                </div>
 
-            <div class="field-group">
-                <label>Humidity ≥</label>
-                <input type="number" step="0.1" name="humidity">
-            </div>
+                <div class="field-group">
+                    <label>Max Area</label>
+                    <label>
+                        <input type="number" name="maxArea" th:value="${param.maxArea}">
+                    </label>
+                </div>
 
-            <div class="field-group">
-                <label>Wind Speed ≤</label>
-                <input type="number" step="0.1" name="wind">
-            </div>
+                <div class="field-group">
+                    <label>Humidity ≥</label>
+                    <label>
+                        <input type="number" name="humidity" th:value="${param.humidity}">
+                    </label>
+                </div>
 
-            <div class="field-actions">
-                <button class="panel-btn save-btn">Apply Filters</button>
-                <button class="panel-btn refresh-btn">Reset</button>
-            </div>
+                <div class="field-group">
+                    <label>Wind ≤</label>
+                    <label>
+                        <input type="number" name="wind" th:value="${param.wind}">
+                    </label>
+                </div>
+
+                <div class="field-actions">
+                    <button type="submit" class="panel-btn save-btn">Apply Filters</button>
+                    <a th:href="@{/fieldsInfo}" class="panel-btn refresh-btn">Reset</a>
+                </div>
+
+            </form>
 
         </div>
     </div>

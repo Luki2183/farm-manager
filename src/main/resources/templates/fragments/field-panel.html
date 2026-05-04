@@ -13,34 +13,10 @@
             <div class="field-group">
                 <label for="grainType">Grain Type</label>
                 <select id="grainType">
-                    <option value="DEFAULT">-- Select grain --</option>
-                    <option value="WHEAT">Wheat</option>
-                    <option value="AFTERCROP">Aftercrop</option>
-                    <option value="BARLEY">Barley</option>
-                    <option value="CANOLA">Canola</option>
-                    <option value="CARROTS">Carrots</option>
-                    <option value="CORN">Corn</option>
-                    <option value="COTTON">Cotton</option>
-                    <option value="GRAPE">Grape</option>
-                    <option value="GRASS">Grass</option>
-                    <option value="GREEN_BEANS">Green Beans</option>
-                    <option value="LONG_GRAIN_RICE">Long Grain Rice</option>
-                    <option value="OATS">Oats</option>
-                    <option value="OILSEED_RADISH">Oilseed Radish</option>
-                    <option value="OLIVES">Olives</option>
-                    <option value="ONIONS">Onions</option>
-                    <option value="PARSNIPS">Parsnips</option>
-                    <option value="PEAS">Peas</option>
-                    <option value="POPLAR">Poplar</option>
-                    <option value="POTATOES">Potatoes</option>
-                    <option value="RED_BEETS">Red Beets</option>
-                    <option value="RICE">Rice</option>
-                    <option value="SORGHUM">Sorghum</option>
-                    <option value="SOYBEANS">Soybeans</option>
-                    <option value="SPINACH">Spinach</option>
-                    <option value="SUGAR_BEET">Sugar Beet</option>
-                    <option value="SUGARCANE">Sugarcane</option>
-                    <option value="SUNFLOWERS">Sunflowers</option>
+                    <option th:each="grain : ${grainTypes}"
+                            th:value="${grain}"
+                            th:text="${#strings.capitalize(#strings.toLowerCase(grain)).replaceAll('_', ' ')}">
+                    </option>
                 </select>
             </div>
 
