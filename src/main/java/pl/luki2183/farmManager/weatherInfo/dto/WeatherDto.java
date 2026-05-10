@@ -7,7 +7,7 @@ import lombok.Data;
 
 /**
  * Exact mapping of the Google Weather API currentConditions response.
- * Jackson ObjectMapper deserializes this automatically via RestTemplate.
+ * <p>Jackson ObjectMapper deserializes this automatically via RestTemplate.</p>
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

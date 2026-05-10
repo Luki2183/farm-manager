@@ -7,7 +7,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.luki2183.farmManager.config.GoogleConfig;
-import pl.luki2183.farmManager.exception.WeatherInfoException;
+import pl.luki2183.farmManager.exception.model.WeatherInfoException;
 import pl.luki2183.farmManager.fields.model.PointEntity;
 import pl.luki2183.farmManager.weatherInfo.dto.WeatherDto;
 import pl.luki2183.farmManager.weatherInfo.mapper.WeatherInfoMapper;
@@ -15,6 +15,9 @@ import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
 import java.net.URI;
 
+/**
+ * Service class for fetching external weather data.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,25 +28,40 @@ public class WeatherGetService {
     private final WeatherInfoMapper mapper;
     private final URI baseUrl = URI.create("https://weather.googleapis.com/v1/currentConditions:lookup");
 
+    /**
+     * <p>Prepares Uri with queryParams as such:</p>
+     * <ul>
+     *     <li>"key"</li>
+     *     <li>"location.latitude"</li>
+     *     <li>"location.longitude"</li>
+     * </ul>
+     * <p>then uses private {@code fetchSingle} method to receive DTO from Google Weather Services.</p>
+     * @param point point with lat and lng
+     * @return {@link pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity}
+     */
     public WeatherInfoEntity getWeatherInfo(PointEntity point) {
-        log.info("Fetching weather for coordinates: {} {}", point.getLat(), point.getLng());
+        log.info("Fetching weather info for coordinates: lat={} lng={}", point.getLat(), point.getLng());
 
         String url = UriComponentsBuilder.fromUri(baseUrl)
                 .queryParam("key", googleConfig.getKey())
                 .queryParam("location.latitude", point.getLat())
                 .queryParam("location.longitude", point.getLng())
                 .toUriString();
-
+        log.debug("Build request URL: {}", url);
         return fetchSingle(url, point);
     }
 
     private WeatherInfoEntity fetchSingle(String url, PointEntity point) {
+        log.debug("Entering fetchSingle with params: url={}, point={}", url, point);
         try {
             WeatherDto dto = restTemplate.getForObject(url, WeatherDto.class);
             if (dto == null) {
+                log.warn("Received null response from weather API for point: {}", point);
                 throw new WeatherInfoException("Empty response for: " + point.toString());
             }
-            return mapper.fromDto(dto);
+            WeatherInfoEntity result = mapper.fromDto(dto);
+            log.debug("Successfully fetched and mapped weather data for point: {}", point);
+            return result;
         } catch (RestClientException e) {
             log.error("HTTP error fetching weather for '{}': {}", point, e.getMessage());
             throw new WeatherInfoException("Failed to fetch weather for: " + point.toString(), e);

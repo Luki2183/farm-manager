@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.exception.FieldInfoNotFoundException;
+import pl.luki2183.farmManager.exception.model.FieldInfoNotFoundException;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;

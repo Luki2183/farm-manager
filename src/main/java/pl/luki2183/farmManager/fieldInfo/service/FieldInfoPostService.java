@@ -3,7 +3,7 @@ package pl.luki2183.farmManager.fieldInfo.service;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.exception.PrimaryKeyViolationException;
+import pl.luki2183.farmManager.exception.model.PrimaryKeyViolationException;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
 import pl.luki2183.farmManager.fieldInfo.mapper.FieldInfoMapper;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;

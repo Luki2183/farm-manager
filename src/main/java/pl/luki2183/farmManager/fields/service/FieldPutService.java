@@ -3,7 +3,7 @@ package pl.luki2183.farmManager.fields.service;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.exception.FieldEntityNotFoundException;
+import pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;

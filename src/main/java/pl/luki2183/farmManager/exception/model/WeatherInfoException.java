@@ -1,4 +1,4 @@
-package pl.luki2183.farmManager.exception;
+package pl.luki2183.farmManager.exception.model;
 
 public class WeatherInfoException extends RuntimeException {
     public WeatherInfoException(String message) {

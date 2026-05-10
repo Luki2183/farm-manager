@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "pl.luki2183"
-version = "0.0.1-SNAPSHOT"
+version = "0.1.0"
 description = "Bachelors degree project"
 
 java {
@@ -32,9 +32,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation("org.slf4j:slf4j-api:2.0.17")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+// Source: https://mvnrepository.com/artifact/org.zalando/logbook-spring-boot-starter
+    implementation("org.zalando:logbook-spring-boot-starter:4.0.4")
 
 	compileOnly("org.projectlombok:lombok")
-
 	annotationProcessor("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 

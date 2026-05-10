@@ -2,7 +2,7 @@ package pl.luki2183.farmManager.fields.utils;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.luki2183.farmManager.exception.FieldEntityNotFoundException;
+import pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
 import pl.luki2183.farmManager.utils.Finder;
