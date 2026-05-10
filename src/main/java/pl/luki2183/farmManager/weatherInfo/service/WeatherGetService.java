@@ -2,7 +2,6 @@ package pl.luki2183.farmManager.weatherInfo.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.engine.jdbc.batch.spi.BatchBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -11,11 +10,10 @@ import pl.luki2183.farmManager.config.GoogleConfig;
 import pl.luki2183.farmManager.exception.WeatherInfoException;
 import pl.luki2183.farmManager.fields.model.PointEntity;
 import pl.luki2183.farmManager.weatherInfo.dto.WeatherDto;
-import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.weatherInfo.mapper.WeatherInfoMapper;
+import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
 import java.net.URI;
-import java.util.List;
 
 @Slf4j
 @Service

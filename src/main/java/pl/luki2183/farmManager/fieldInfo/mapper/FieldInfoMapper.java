@@ -39,12 +39,11 @@ public class FieldInfoMapper {
         dto.setExpectedHarvestDate(entity.getExpectedHarvestDate().format(dateFormat.getDateFormat()));
         dto.setHumidity(entity.getWeatherInfo().getHumidity());
         dto.setWindSpeed(entity.getWeatherInfo().getWindSpeed());
-        dto.setFieldColor(colorConverter.toHexString(entity.getFieldColor()));
+        dto.setFieldName(entity.getFieldName());
         return dto;
     }
 
     public FieldInfoEntity dtoToInfo(FieldInfoUpdateDto dto, FieldEntity entityToBind, WeatherInfoEntity weatherInfoToBind) {
-//        todo expectedHarvestDate = automatic update with internal logic
         return FieldInfoEntity.builder()
                 .fieldId(entityToBind.getFieldId())
                 .field(entityToBind)
@@ -53,7 +52,7 @@ public class FieldInfoMapper {
                 .plantDate(LocalDate.parse(dto.getPlantDate(), dateFormat.getDateFormat()))
                 .expectedHarvestDate(LocalDate.parse(dto.getExpectedHarvestDate(), dateFormat.getDateFormat()))
                 .weatherInfo(weatherInfoToBind)
-                .fieldColor(Color.decode(dto.getFieldColor()))
+                .fieldName(dto.getFieldName())
                 .build();
     }
 }

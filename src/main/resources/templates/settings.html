@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="PL">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/settings.css}">
+</head>
+<body>
+<!-- TOP BAR -->
+<div th:replace="~{fragments/top-bar :: topBar}"></div>
+
+<!-- MAIN CONTENT -->
+<div id="settings-container">
+
+    <!-- Flash message -->
+    <div th:if="${successMessage}" class="settings-flash" th:text="${successMessage}"></div>
+
+    <!-- Single form wraps all grain cards + the save button -->
+    <form method="post" th:action="@{/settings/colors}">
+        <input type="hidden" name="_method" value="put"/>
+
+        <!-- Grain cards grid -->
+        <div class="grain-cards-grid">
+            <div th:each="entry : ${settings.getColorMap()}">
+                <div th:replace="~{fragments/grain-card :: grainCard(grain=${entry.key}, hex=${entry.value})}"></div>
+            </div>
+        </div>
+
+        <!-- Save all — pinned at the bottom -->
+        <div class="settings-footer">
+            <button type="submit" class="panel-btn save-btn settings-save-btn">
+                Save All Colors
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

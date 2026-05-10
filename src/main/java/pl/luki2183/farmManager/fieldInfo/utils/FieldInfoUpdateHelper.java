@@ -24,7 +24,7 @@ public class FieldInfoUpdateHelper {
         if (dto.getGrainType() != null && !dto.getGrainType().isBlank()) entity.setGrainType(Grain.valueOf(dto.getGrainType()));
         if (dto.getPlantDate() != null && !dto.getPlantDate().isBlank()) entity.setPlantDate(LocalDate.parse(dto.getPlantDate(), dateFormat.getDateFormat()));
         if (dto.getExpectedHarvestDate() != null && !dto.getExpectedHarvestDate().isBlank()) entity.setExpectedHarvestDate(LocalDate.parse(dto.getExpectedHarvestDate(), dateFormat.getDateFormat()));
-        if (dto.getFieldColor() != null && !dto.getFieldColor().isBlank()) entity.setFieldColor(Color.decode(dto.getFieldColor()));
+        if (dto.getFieldName() != null && !dto.getFieldName().isBlank()) entity.setFieldName(dto.getFieldName());
         return entity;
     }
 

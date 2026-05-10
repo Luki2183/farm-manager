@@ -9,6 +9,13 @@
             <form method="get" th:action="@{/fieldsInfo}">
 
                 <div class="field-group">
+                    <label>Field Name</label>
+                    <label>
+                        <input type="text" name="fieldName" th:value="${param.fieldName}" placeholder="Search by name..."/>
+                    </label>
+                </div>
+
+                <div class="field-group">
                     <label>Grain Type</label>
                     <label>
                         <select name="grainType" th:value="${param.grainType}">

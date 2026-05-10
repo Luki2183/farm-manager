@@ -9,5 +9,5 @@ public class FieldInfoUpdateDto {
     private String grainType;
     private String plantDate;
     private String expectedHarvestDate;
-    private String fieldColor;
+    private String fieldName;
 }

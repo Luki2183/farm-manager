@@ -6,10 +6,17 @@ const historyToUndo = new Map()
 const fieldInfoHistory = new Map()
 const historySequence = []
 
+let savedMapCenter = null;
+
+let colorMap = new Map;
+
+const grainMap = new Map;
+
 async function initMap() {
+    await loadSettings()
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 52.2297, lng: 21.0122 },
-        zoom: 12,
+        center: savedMapCenter,
+        zoom: 15,
         streetViewControl: false
     });
     google.maps.event.addListenerOnce(map, "projection_changed", () =>{
@@ -20,12 +27,28 @@ async function initMap() {
             }),
             modes: [
                 new terraDraw.TerraDrawPolygonMode({
+                    styles: {
+                        closingPointColor: ({ id }) => {
+                            return pickColor(id);
+                        },
+                        fillColor: ({ id }) => {
+                            return pickColor(id);
+                        },
+                        outlineColor: "#343434"
+                    },
                     snapping: {
                         toLine: true,
                         toCoordinate: true,
                     }
                 }),
                 new terraDraw.TerraDrawSelectMode({
+                    styles: {
+                        selectionPointColor: "#44FF00",
+                        midPointColor: "#44FF00",
+                        selectedPolygonColor: "#44FF00",
+                        selectedPolygonOutlineColor: "#1e1e1e",
+                        selectedPolygonFillOpacity: 0.2,
+                    },
                     flags: {
                         polygon: {
                             feature: {
@@ -69,7 +92,6 @@ async function initMap() {
         setMode("select")
         draw.on("select", (featureId) => {
             console.info("Selected feature with id: ", featureId)
-            // todo fetch fieldInfoData
             geometryCopyOfSelected = structuredClone(draw.getSnapshotFeature(featureId).geometry)
             selectedFeatureId = featureId;
             loadFieldInfo(featureId)
@@ -88,6 +110,7 @@ async function initMap() {
 
         loadPolygons()
         clearFieldPanel()
+        loadSettings()
     })
 
 }
@@ -102,6 +125,7 @@ function loadFieldInfo(fieldId) {
             console.info("FieldInfo loaded with output=%o", data);
             fieldInfoHistory.set(fieldId, data);
             fillFieldPanel(data)
+            refreshColor(data.fieldId)
         })
         .catch(err => console.error(err));
 }
@@ -113,7 +137,7 @@ function fillFieldPanel(fieldInfo) {
     document.getElementById("expectedHarvestDate").value = new Date(fieldInfo.expectedHarvestDate).toISOString().substring(0, 10);
     document.getElementById("humidity").value = fieldInfo.humidity ?? "";
     document.getElementById("windSpeed").value = fieldInfo.windSpeed ?? "";
-    document.getElementById("fieldColor").value = fieldInfo.fieldColor ?? "#4CAF50";
+    document.getElementById("fieldName").value = fieldInfo.fieldName ?? "";
 } // todo move logic to backend/replace by thymeleaf
 
 function clearFieldPanel() {
@@ -123,7 +147,7 @@ function clearFieldPanel() {
     document.getElementById("expectedHarvestDate").value = "";
     document.getElementById("humidity").value = "0";
     document.getElementById("windSpeed").value = "0";
-    document.getElementById("fieldColor").value = "#0000FF";
+    document.getElementById("fieldName").value = "";
 }
 
 function addOrUpdateOnFinishOrDeselect(featureId) {
@@ -170,7 +194,7 @@ function createFieldInfo(feature, fieldInfo = null) {
         "grainType": fieldInfo === null ? "DEFAULT" : fieldInfo.grainType,
         "plantDate": fieldInfo === null ? new Date().toLocaleDateString('en-CA') : fieldInfo.plantDate,
         "expectedHarvestDate": fieldInfo === null ? new Date().toLocaleDateString('en-CA') : fieldInfo.expectedHarvestDate,
-        "fieldColor": fieldInfo === null ? "#0000FF" : fieldInfo.fieldColor
+        "fieldName": fieldInfo == null ? "Unnamed" : fieldInfo.fieldName
     }
 
     fetch("/api/fieldInfo", {
@@ -224,7 +248,7 @@ function updateFieldInfo(featureId) {
         "grainType": document.getElementById("grainType").value,
         "plantDate": document.getElementById("plantDate").value,
         "expectedHarvestDate": document.getElementById("expectedHarvestDate").value,
-        "fieldColor": document.getElementById("fieldColor").value
+        "fieldName": document.getElementById("fieldName").value
     }
 
     fetch(`/api/fieldInfo/${feature.id}`, {
@@ -240,6 +264,7 @@ function updateFieldInfo(featureId) {
         })
         .then(data => {
             console.info("Updated fieldInfo with output=%o", data);
+            grainMap.set(data.fieldId, data.grainType)
             loadFieldInfo(feature.id)
         })
         .catch(err => console.error(err));
@@ -258,8 +283,9 @@ function loadPolygons(){
             draw.addFeatures(features)
             features.forEach(feature => {
                 addToHistory(feature.id, structuredClone(feature))
+                grainMap.set(feature.id, feature.grainType)
             })
-            setMapCenter()
+            setMapCenter(getFocusedFieldCenter())
         })
 }
 
@@ -385,20 +411,52 @@ function addToHistory(featureId, feature) {
     }
 }
 
-function setMapCenter() {
+function getFocusedFieldCenter() {
     let val = document.getElementById("focusedFieldId").value;
     let feature = draw.getSnapshotFeature(val);
+    let latLng
     if (feature !== undefined) {
         let coordinatesList = feature.geometry.coordinates[0];
         console.debug(coordinatesList)
         let coordinates = getCenterFromArray(coordinatesList);
         console.debug(coordinates)
-        let latLng = {
+        latLng = {
             "lng": coordinates[0],
             "lat": coordinates[1]
         }
-        map.setCenter(latLng)
+        draw.selectFeature(feature.id);
     }
+    return latLng;
+}
+
+function setMapCenter(latLng) {
+    map.setCenter(latLng)
+}
+
+function getCurrentMapCenter() {
+    let center = map.getCenter();
+    return {
+        "lng": center.lng(),
+        "lat": center.lat()
+    }
+}
+
+function updateCenter() {
+    fetch(`/api/settings`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(getCurrentMapCenter())
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to update fieldInfo with id=%o", feature.id);
+            return response.json();
+        })
+        .then(data => {
+            console.info("Updated settings center point with output=%o", data);
+        })
+        .catch(err => console.error(err));
 }
 
 // Helper function to setMapCenter()
@@ -410,6 +468,29 @@ function getCenterFromArray(arr) {
     let minY = Math.min.apply (null, y);
     let maxY = Math.max.apply (null, y);
     return [(minX + maxX) / 2, (minY + maxY) / 2];
+}
+
+function pickColor(id) {
+    let grain = grainMap.get(id)
+    if (grain === undefined) return "#00aaff";
+    return colorMap.get(grain);
+}
+
+function refreshColor(id) {
+    let feature = draw.getSnapshotFeature(id)
+    draw.removeFeatures([id])
+    draw.addFeatures([feature]);
+    draw.selectFeature(id);
+}
+
+async function loadSettings() {
+    fetch("/api/settings")
+        .then(response => response.json())
+        .then(settings => {
+            savedMapCenter = settings.center
+            setMapCenter(savedMapCenter)
+            colorMap = new Map(Object.entries(settings.colorMap))
+        })
 }
 
 // Shortcuts

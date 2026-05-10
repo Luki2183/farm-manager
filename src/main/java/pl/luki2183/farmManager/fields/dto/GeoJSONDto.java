@@ -1,6 +1,7 @@
 package pl.luki2183.farmManager.fields.dto;
 
 import lombok.Data;
+import pl.luki2183.farmManager.fieldInfo.model.Grain;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class GeoJSONDto {
     private Double area;
     private Geometry geometry;
     private Properties properties = new Properties();
+    private Grain grainType;
 
     @Data
     public static class Geometry {

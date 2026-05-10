@@ -11,5 +11,5 @@ public class FieldInfoDto {
     private String expectedHarvestDate;
     private double humidity;
     private double windSpeed;
-    private String fieldColor;
+    private String fieldName;
 }

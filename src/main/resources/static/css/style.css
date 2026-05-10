@@ -310,16 +310,6 @@ input[type="number"] {
     color: rgb(50, 50, 50);
 }
 
-.field-color-dot {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-left: 8px;
-    vertical-align: middle;
-    border: 1px solid #ccc;
-}
-
 .humidity-cell {
     display: flex;
     flex-direction: column;
@@ -395,6 +385,46 @@ input[type="number"] {
 }
 
 .map-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+
+/* CENTER CONTROLS — bottom left corner of the map */
+
+.center-controls {
+    position: fixed;
+    bottom: 30px;
+    left: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    pointer-events: auto;
+    z-index: 15;
+}
+
+.center-btn {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 4px -1px;
+    transition: background-color 0.15s ease;
+}
+
+.center-btn:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.center-btn-icon {
     width: 20px;
     height: 20px;
     object-fit: contain;

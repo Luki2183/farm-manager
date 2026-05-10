@@ -1,6 +1,7 @@
 package pl.luki2183.farmManager.fieldInfo.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +13,17 @@ import pl.luki2183.farmManager.fieldInfo.service.FieldInfoGetService;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/fieldsInfo")
-public class FieldInfoDefaultController {
+public class FieldInfoViewController {
 
     private final FieldInfoGetService getService;
 
     @GetMapping
     public String getAllFields(
+            @RequestParam(required = false) String fieldName,
             @RequestParam(required = false) Grain grainType,
             @RequestParam(required = false) Double minArea,
             @RequestParam(required = false) Double maxArea,
@@ -28,11 +31,13 @@ public class FieldInfoDefaultController {
             @RequestParam(required = false) Double wind,
             Model model
     ) {
-        List<FieldInfoDto> fields = getService.getFilteredFields(grainType, minArea, maxArea, humidity, wind);
+        List<FieldInfoDto> fields = getService.getFilteredFields(fieldName, grainType, minArea, maxArea, humidity, wind);
         model.addAttribute("fields", fields);
         model.addAttribute("activePage", "fields");
         model.addAttribute("grainType", grainType);
         model.addAttribute("grainTypes", Grain.values());
         return "fields-info";
     }
+
+
 }

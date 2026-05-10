@@ -1,32 +1,30 @@
 package pl.luki2183.farmManager.fieldInfo.model;
 
 public enum Grain {
-    DEFAULT,
-    WHEAT,
-    AFTERCROP,
-    BARLEY,
-    CANOLA,
-    CARROTS,
-    CORN,
-    COTTON,
-    GRAPE,
-    GRASS,
-    GREEN_BEANS,
-    LONG_GRAIN_RICE,
-    OATS,
-    OILSEED_RADISH,
-    OLIVES,
-    ONIONS,
-    PARSNIPS,
-    PEAS,
-    POPLAR,
-    POTATOES,
-    RED_BEETS,
-    RICE,
-    SORGHUM,
-    SOYBEANS,
-    SPINACH,
-    SUGAR_BEET,
-    SUGARCANE,
-    SUNFLOWERS,
+    DEFAULT, // domyślne
+    WHEAT, // przenica
+    BARLEY, // jęczmień
+    HYBRID_BARLEY, // jęczmień hybrydowy
+    COLZA, // rzepak
+    CARROT, // marchew
+    CORN, // kukurydza
+    OATS, // owies
+    NAKED_OATS, // owies nagi
+    ROUGH_OATS, // owies szorstki
+    ONION, // cebula
+    PEAS, // groch
+    POTATO, // ziemniak
+    RED_BEET, // burak czerwony
+    SORGHUM, // sorgo
+    SOYBEANS, // soja
+    SUGAR_BEET, // burak cukrowy
+    SUNFLOWER, // słonecznik
+    LUPINE, // łubin
+    TRITICALE, // przenżyto
+    RYE, // żyto
+    HYBRID_RYE, // żyto hybrydowe
+    SYNTHETIC_RYE, // żyto syntetyczne
+    BROAD_BEAN, // bobik
+    COVERED_VETCH, // wyka siewna
+    CEREAL_MIXTURE // mieszanka zbożowa
 }

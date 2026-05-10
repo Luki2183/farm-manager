@@ -1,0 +1,129 @@
+/* ── settings.css ─────────────────────────────────────────────────────────── */
+
+/* ── Page wrapper ── */
+
+#settings-container {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    min-height: calc(100% - 60px);
+    padding: 30px 30px 100px; /* bottom padding leaves room for the footer bar */
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* ── Flash success message ── */
+
+.settings-flash {
+    background-color: #f1f8f4;
+    border: 1px solid #4CAF50;
+    border-radius: 6px;
+    color: #2e7d32;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* ── Grain card grid ── */
+
+.grain-cards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* ── Individual grain card (square) ── */
+
+.grain-card {
+    width: 180px;
+    height: 180px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 6px;
+    box-sizing: border-box;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* border-top colour is set inline from the grain hex */
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.grain-card:hover {
+    box-shadow: rgba(0, 0, 0, 0.18) 0 6px 16px;
+    transform: translateY(-2px);
+}
+
+/* Colour swatch square inside the card */
+.grain-card-swatch {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px;
+    flex-shrink: 0;
+}
+
+.grain-card-name {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(60, 60, 60);
+    margin: 0;
+    text-align: center;
+}
+
+/* Hex input inside card — reuses .field-group conventions */
+.grain-card .field-group {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.grain-card .field-group label {
+    font-size: 12px;
+}
+
+.color-picker {
+    width: 100%;
+    height: 36px;
+    padding: 2px 4px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 6px;
+    background-color: white;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-picker:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.15);
+}
+
+/* ── Sticky save footer ── */
+
+.settings-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-top: 1px solid rgb(230, 230, 230);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+    padding: 12px 30px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 10;
+}
+
+.settings-save-btn {
+    width: 200px;
+    height: 42px;
+}

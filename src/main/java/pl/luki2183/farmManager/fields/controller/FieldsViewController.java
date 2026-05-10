@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 
 @Controller
-public class FieldsDefaultController {
+public class FieldsViewController {
 
     @GetMapping("/")
     public String map(Model model) {

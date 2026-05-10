@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="PL">
+<body>
 <div class="field-card" th:fragment="fieldCard(field)">
 
     <div class="field-card-container">
@@ -10,12 +13,7 @@
 
         <!-- HEADER -->
         <h3 class="panel-title">
-            <span th:text="'Field ' + ${field.fieldId}"></span>
-
-            <!-- color dot -->
-            <span class="field-color-dot"
-                  th:style="'background-color:' + ${field.fieldColor}">
-            </span>
+            <span th:text="'Field ' + ${field.fieldName}"></span>
         </h3>
 
         <!-- GRID -->
@@ -23,7 +21,7 @@
 
             <div class="grid-item">
                 <label>Surface</label>
-                <span th:text="${field.surfaceArea} + ' ha'"></span>
+                <span th:utext="${field.surfaceArea} + ' km<sup>2</sup>'"></span>
             </div>
 
             <div class="grid-item">
@@ -60,3 +58,4 @@
     </div>
 
 </div>
+</body>

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "field_info_entities")
+@Table(name = "field_infos")
 public class FieldInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +38,7 @@ public class FieldInfoEntity {
 
     private WeatherInfoEntity weatherInfo;
 
-    private Color fieldColor;
+    private String fieldName;
 }
 
 

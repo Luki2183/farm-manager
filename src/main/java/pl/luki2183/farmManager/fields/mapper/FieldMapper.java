@@ -28,6 +28,7 @@ public class FieldMapper {
         }).toList();
         geometry.setCoordinates(List.of(points));
         result.setGeometry(geometry);
+        result.setGrainType(field.getFieldInfo().getGrainType());
         return result;
     }
 

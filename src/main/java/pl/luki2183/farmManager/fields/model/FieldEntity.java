@@ -15,7 +15,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "field_entities")
+@Table(name = "fields")
 public class FieldEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
