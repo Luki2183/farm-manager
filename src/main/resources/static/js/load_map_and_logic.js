@@ -455,6 +455,7 @@ function updateCenter() {
         })
         .then(data => {
             console.info("Updated settings center point with output=%o", data);
+            savedMapCenter = data.center
         })
         .catch(err => console.error(err));
 }

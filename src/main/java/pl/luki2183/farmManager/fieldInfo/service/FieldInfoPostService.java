@@ -30,7 +30,7 @@ public class FieldInfoPostService {
         if (repository.existsByFieldId(dto.getFieldId())) throw new PrimaryKeyViolationException();
         FieldEntity fieldEntity = fieldFinder.find(dto.getFieldId());
         PointEntity centerPoint = coordinatesHelper.getCenter(fieldEntity.getCoordinates());
-        WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(centerPoint);
+        WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfoEntity(centerPoint);
         FieldInfoEntity entity = mapper.dtoToInfo(dto, fieldEntity, weatherInfo);
         fieldEntity.setFieldInfo(entity);
         return repository.save(entity);

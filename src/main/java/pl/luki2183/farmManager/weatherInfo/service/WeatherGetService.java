@@ -10,6 +10,7 @@ import pl.luki2183.farmManager.config.GoogleConfig;
 import pl.luki2183.farmManager.exception.model.WeatherInfoException;
 import pl.luki2183.farmManager.fields.model.PointEntity;
 import pl.luki2183.farmManager.weatherInfo.dto.WeatherDto;
+import pl.luki2183.farmManager.weatherInfo.dto.WeatherInfoDto;
 import pl.luki2183.farmManager.weatherInfo.mapper.WeatherInfoMapper;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
@@ -39,7 +40,7 @@ public class WeatherGetService {
      * @param point point with lat and lng
      * @return {@link pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity}
      */
-    public WeatherInfoEntity getWeatherInfo(PointEntity point) {
+    public WeatherInfoEntity getWeatherInfoEntity(PointEntity point) {
         log.info("Fetching weather info for coordinates: lat={} lng={}", point.getLat(), point.getLng());
 
         String url = UriComponentsBuilder.fromUri(baseUrl)
@@ -51,6 +52,16 @@ public class WeatherGetService {
         return fetchSingle(url, point);
     }
 
+    /**
+     * Reuses {@code getWeatherInfoEntity} to fetch and map weather info for controller response.
+     * <p>It's only use is inside the controller.</p>
+     * @param point point with lat and lng
+     * @return {@link WeatherInfoDto}
+     */
+    public WeatherInfoDto getWeatherInfoDto(PointEntity point) {
+        return mapper.fromEntityToDto(getWeatherInfoEntity(point));
+    }
+
     private WeatherInfoEntity fetchSingle(String url, PointEntity point) {
         log.debug("Entering fetchSingle with params: url={}, point={}", url, point);
         try {
@@ -59,7 +70,7 @@ public class WeatherGetService {
                 log.warn("Received null response from weather API for point: {}", point);
                 throw new WeatherInfoException("Empty response for: " + point.toString());
             }
-            WeatherInfoEntity result = mapper.fromDto(dto);
+            WeatherInfoEntity result = mapper.fromResponseToEntity(dto);
             log.debug("Successfully fetched and mapped weather data for point: {}", point);
             return result;
         } catch (RestClientException e) {

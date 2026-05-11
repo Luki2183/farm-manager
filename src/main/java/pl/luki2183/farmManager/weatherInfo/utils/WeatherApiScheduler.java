@@ -46,7 +46,7 @@ public class WeatherApiScheduler {
 
         fieldIdToCenterMap.forEach((fieldId, center) -> {
             log.debug("Fetching weather for fieldId={} at center: lat={}, lng={}", fieldId, center.getLat(), center.getLng());
-            WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfo(center);
+            WeatherInfoEntity weatherInfo = weatherGetService.getWeatherInfoEntity(center);
             fieldInfoPutService.updateWeather(fieldId, weatherInfo);
             log.debug("Successfully updated weather for fieldId={}", fieldId);
         });

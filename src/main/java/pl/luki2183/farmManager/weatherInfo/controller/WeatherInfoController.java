@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.luki2183.farmManager.fields.dto.PointDto;
 import pl.luki2183.farmManager.fields.mapper.PointMapper;
 import pl.luki2183.farmManager.fields.model.PointEntity;
+import pl.luki2183.farmManager.weatherInfo.dto.WeatherInfoDto;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.weatherInfo.service.WeatherGetService;
 
@@ -36,12 +37,12 @@ public class WeatherInfoController {
      * @return {@link WeatherInfoEntity} packaged into {@link org.springframework.http.ResponseEntity ResponseEntity}.
      */
     @GetMapping
-    public ResponseEntity<WeatherInfoEntity> getWeatherInfo(
+    public ResponseEntity<WeatherInfoDto> getWeatherInfo(
             @RequestBody PointDto dto
     ) {
         log.info("Received request to get weather info for point: {}", dto);
         PointEntity point = mapper.fromDto(dto);
-        WeatherInfoEntity weatherInfo = getService.getWeatherInfo(point);
+        WeatherInfoDto weatherInfo = getService.getWeatherInfoDto(point);
         log.info("Successfully retrieved weather info: {}", weatherInfo);
         return ResponseEntity.ok(weatherInfo);
     }
