@@ -8,22 +8,23 @@ import pl.luki2183.farmManager.weatherInfo.dto.WeatherInfoDto;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
 /**
- * Mapping class for WeatherInfo.
+ * Mapper component providing bidirectional conversion between
+ * {@link WeatherInfoEntity} and {@link WeatherInfoDto}.
  */
 @Slf4j
 @Component
 public class WeatherInfoMapper implements Mapper<WeatherInfoEntity, WeatherInfoDto> {
     /**
-     * Creates a {@code WeatherInfoEntity} object from provided data transfer object.
+     * Creates a {@link WeatherInfoEntity} object from {@link WeatherDto}.
      * @param dto object of {@link WeatherDto} class
      * @return {@link pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity}
      */
     public WeatherInfoEntity fromResponseToEntity(WeatherDto dto) {
-        log.debug("Entering fromResponseToEntity with params: {}", dto);
+        log.debug("Mapping WeatherDto to WeatherInfoEntity: {}", dto);
         WeatherInfoEntity entity = new WeatherInfoEntity();
         entity.setHumidity(dto.getRelativeHumidity());
         entity.setWindSpeed(dto.getWind().getSpeed().getValue());
-        log.debug("Mapped WeatherDto to WeatherInfoEntity: {}", entity);
+        log.debug("Mapped WeatherInfoEntity result: {}", entity);
         return entity;
     }
 
@@ -35,11 +36,11 @@ public class WeatherInfoMapper implements Mapper<WeatherInfoEntity, WeatherInfoD
      */
     @Override
     public WeatherInfoEntity fromDtoToEntity(WeatherInfoDto dto) {
-        log.debug("Entering fromDtoToEntity with params: {}", dto);
+        log.debug("Mapping WeatherInfoDto to WeatherInfoEntity: {}", dto);
         WeatherInfoEntity entity = new WeatherInfoEntity();
         entity.setWindSpeed(dto.getWindSpeed());
         entity.setHumidity(dto.getHumidity());
-        log.debug("Mapped WeatherInfoDto to WeatherInfoEntity: {}", entity);
+        log.debug("Mapped WeatherInfoEntity result: {}", entity);
         return entity;
     }
 
@@ -51,11 +52,11 @@ public class WeatherInfoMapper implements Mapper<WeatherInfoEntity, WeatherInfoD
      */
     @Override
     public WeatherInfoDto fromEntityToDto(WeatherInfoEntity entity) {
-        log.debug("Entering fromEntityToDto with params: {}", entity);
+        log.debug("Mapping WeatherInfoEntity to WeatherInfoDto: {}", entity);
         WeatherInfoDto dto = new WeatherInfoDto();
         dto.setHumidity(entity.getHumidity());
         dto.setWindSpeed(entity.getWindSpeed());
-        log.debug("Mapped WeatherInfoEntity to WeatherInfoDto: {}", dto);
+        log.debug("Mapped WeatherInfoDto result: {}", dto);
         return dto;
     }
 }

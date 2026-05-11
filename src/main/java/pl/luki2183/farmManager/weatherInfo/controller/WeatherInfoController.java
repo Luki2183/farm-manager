@@ -11,7 +11,6 @@ import pl.luki2183.farmManager.fields.dto.PointDto;
 import pl.luki2183.farmManager.fields.mapper.PointMapper;
 import pl.luki2183.farmManager.fields.model.PointEntity;
 import pl.luki2183.farmManager.weatherInfo.dto.WeatherInfoDto;
-import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.weatherInfo.service.WeatherGetService;
 
 /**
@@ -33,8 +32,8 @@ public class WeatherInfoController {
 
     /**
      * Retrieves current weather info for given geographical point.
-     * @param dto a {@link pl.luki2183.farmManager.weatherInfo.dto.WeatherDto WeatherDto} class object
-     * @return {@link WeatherInfoEntity} packaged into {@link org.springframework.http.ResponseEntity ResponseEntity}.
+     * @param dto a {@link PointDto} class object
+     * @return {@link ResponseEntity} containing {@link WeatherInfoDto}.
      */
     @GetMapping
     public ResponseEntity<WeatherInfoDto> getWeatherInfo(
