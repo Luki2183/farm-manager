@@ -20,5 +20,5 @@ public class SettingsDto {
      * Mapping of each {@link pl.luki2183.farmManager.fieldInfo.model.Grain} type
      * to its display color, stored as a hex color string (e.g., {@code "#FF5733"}).
      */
-    private Map<Grain, String> colorMap;
+    private Map<Grain, String> grainColors;
 }

@@ -57,7 +57,7 @@ public class SettingsViewController {
      * @param redirectAttributes used to pass a success flash message after redirect
      * @return a redirect to {@code /settings}
      */
-    @PostMapping("/colors")
+    @PutMapping("/colors")
     public String updateAllColors(
             @RequestParam Map<String, String> params,
             RedirectAttributes redirectAttributes

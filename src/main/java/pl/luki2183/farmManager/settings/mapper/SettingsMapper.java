@@ -31,7 +31,7 @@ public class SettingsMapper implements Mapper<SettingsEntity, SettingsDto> {
         centerDto.setLng(entity.getCenter().getLng());
         centerDto.setLat(entity.getCenter().getLat());
         dto.setCenter(centerDto);
-        dto.setColorMap(entity.getGrainColors());
+        dto.setGrainColors(entity.getGrainColors());
         log.debug("Mapped SettingsDto result: {}", dto);
         return dto;
     }
@@ -50,7 +50,7 @@ public class SettingsMapper implements Mapper<SettingsEntity, SettingsDto> {
         centerEntity.setLat(dto.getCenter().getLat());
         centerEntity.setLng(dto.getCenter().getLng());
         entity.setCenter(centerEntity);
-        entity.setGrainColors(dto.getColorMap());
+        entity.setGrainColors(dto.getGrainColors());
         log.debug("Mapped SettingsEntity result: {}", entity);
         return entity;
     }

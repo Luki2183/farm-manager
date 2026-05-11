@@ -17,12 +17,14 @@
 
     <div class="field-group">
         <label th:for="'color-' + ${grain}">Color</label>
-        <input type="color"
-               class="color-picker"
-               th:id="'color-' + ${grain}"
-               th:name="${grain}"
-               th:value="${hex}"
-               required/>
+        <label>
+            <input type="color"
+                   class="color-picker"
+                   th:id="'color-' + ${grain}"
+                   th:name="${grain}"
+                   th:value="${hex}"
+                   required/>
+        </label>
     </div>
 
 </div>

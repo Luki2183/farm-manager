@@ -27,8 +27,8 @@
 
         <!-- Grain cards grid -->
         <div class="grain-cards-grid">
-            <div th:each="entry : ${settings.getColorMap()}">
-                <div th:replace="~{fragments/grain-card :: grainCard(grain=${entry.key}, hex=${entry.value})}"></div>
+            <div th:each="entry : ${settings.getGrainColors()}">
+                <div th:replace="~{fragments/grain-card :: grainCard(grain=${entry.getKey()}, hex=${entry.getValue()})}"></div>
             </div>
         </div>
 

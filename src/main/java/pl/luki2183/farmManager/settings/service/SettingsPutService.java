@@ -38,7 +38,7 @@ public class SettingsPutService {
         centerEntity.setLng(dto.getCenter().getLng());
         centerEntity.setLat(dto.getCenter().getLat());
         entity.setCenter(centerEntity);
-        entity.getGrainColors().putAll(dto.getColorMap());
+        entity.getGrainColors().putAll(dto.getGrainColors());
         SettingsDto result = mapper.fromEntityToDto(repository.save(entity));
         log.info("Successfully updated settings: {}", result);
         return result;
