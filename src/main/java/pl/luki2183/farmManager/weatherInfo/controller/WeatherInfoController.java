@@ -40,7 +40,7 @@ public class WeatherInfoController {
             @RequestBody PointDto dto
     ) {
         log.info("Received request to get weather info for point: {}", dto);
-        PointEntity point = mapper.fromDto(dto);
+        PointEntity point = mapper.fromDtoToEntity(dto);
         WeatherInfoDto weatherInfo = getService.getWeatherInfoDto(point);
         log.info("Successfully retrieved weather info: {}", weatherInfo);
         return ResponseEntity.ok(weatherInfo);

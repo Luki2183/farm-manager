@@ -9,8 +9,9 @@ import pl.luki2183.farmManager.settings.model.SettingsEntity;
 import pl.luki2183.farmManager.utils.Mapper;
 
 /**
- * Mapper component providing bidirectional conversion between
- * {@link SettingsEntity} and {@link SettingsDto}.
+ * Mapper component implementing {@link pl.luki2183.farmManager.utils.Mapper} for
+ * {@link SettingsEntity} and {@link SettingsDto}, providing bidirectional conversion
+ * between the two types.
  */
 @Slf4j
 @Component

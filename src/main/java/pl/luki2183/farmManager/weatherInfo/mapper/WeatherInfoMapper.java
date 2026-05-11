@@ -8,8 +8,13 @@ import pl.luki2183.farmManager.weatherInfo.dto.WeatherInfoDto;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
 /**
- * Mapper component providing bidirectional conversion between
- * {@link WeatherInfoEntity} and {@link WeatherInfoDto}.
+ * Mapper component implementing {@link pl.luki2183.farmManager.utils.Mapper} for
+ * {@link WeatherInfoEntity} and {@link WeatherInfoDto}, providing bidirectional conversion
+ * between the two types.
+ *
+ * <p>Additionally exposes {@link #fromResponseToEntity(WeatherDto)} for direct mapping
+ * from the Google Weather API response object into a {@link WeatherInfoEntity},
+ * bypassing the intermediate {@link WeatherInfoDto}.</p>
  */
 @Slf4j
 @Component
