@@ -23,7 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class FieldMapperTest {
+class FieldMapperUnitTest {
 
     @Spy
     private final FieldMapper sut = new FieldMapper();

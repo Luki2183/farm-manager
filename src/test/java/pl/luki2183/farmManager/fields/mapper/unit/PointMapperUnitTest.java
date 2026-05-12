@@ -6,9 +6,7 @@ import pl.luki2183.farmManager.fields.dto.PointDto;
 import pl.luki2183.farmManager.fields.mapper.PointMapper;
 import pl.luki2183.farmManager.fields.model.PointEntity;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class PointMapperTest {
+class PointMapperUnitTest {
 
     private final PointMapper sut = new PointMapper();
 

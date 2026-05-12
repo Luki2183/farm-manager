@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class FieldFinderTest {
+class FieldFinderUnitTest {
 
     @Mock
     private FieldRepository repository;

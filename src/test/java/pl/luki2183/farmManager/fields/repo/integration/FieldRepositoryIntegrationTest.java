@@ -9,13 +9,10 @@ import pl.luki2183.farmManager.fields.fixtures.FieldEntityFixtures;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @DataJpaTest
-class FieldRepositoryTest {
+class FieldRepositoryIntegrationTest {
 
     @Autowired
     private FieldRepository sut;
