@@ -43,7 +43,7 @@ public class FieldInfoGetService {
                 .filter(entity -> maxArea == null || (entity.getSurfaceArea() <= maxArea))
                 .filter(entity -> humidity == null || (entity.getSurfaceArea() >= humidity))
                 .filter(entity -> wind == null || (entity.getSurfaceArea() <= wind))
-                .filter(entity -> name == null || name.isBlank() || (entity.getFieldName().toLowerCase().contains(name.toLowerCase()))) // todo do naprawy idk
+                .filter(entity -> name == null || name.isBlank() || (entity.getFieldName().toLowerCase().contains(name.toLowerCase())))
                 .toList();
         return mapper.infoToDtoList(entities);
     }
