@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
-import pl.luki2183.farmManager.exception.model.FieldInfoEntityNotFoundException;
 import pl.luki2183.farmManager.fieldInfo.utils.FieldInfoFinder;
-
-import java.util.Optional;
 
 @Slf4j
 @Service

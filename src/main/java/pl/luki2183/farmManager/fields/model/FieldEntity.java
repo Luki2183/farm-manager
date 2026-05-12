@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

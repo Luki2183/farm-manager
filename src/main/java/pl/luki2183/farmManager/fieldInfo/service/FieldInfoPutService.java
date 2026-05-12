@@ -13,8 +13,6 @@ import pl.luki2183.farmManager.fieldInfo.utils.FieldInfoFinder;
 import pl.luki2183.farmManager.fieldInfo.utils.FieldInfoUpdateHelper;
 import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @AllArgsConstructor

@@ -4,15 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException;
 import pl.luki2183.farmManager.fields.dto.FieldDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
 import pl.luki2183.farmManager.fields.utils.FieldFinder;
 import pl.luki2183.farmManager.fields.utils.FieldUpdateHelper;
-
-import java.util.Optional;
 
 /**
  * Service class responsible for updating existing farm fields.
