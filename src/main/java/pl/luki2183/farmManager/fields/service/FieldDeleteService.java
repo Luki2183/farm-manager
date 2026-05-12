@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
+import pl.luki2183.farmManager.fields.utils.FieldFinder;
 
 import java.util.Optional;
 
@@ -19,23 +20,21 @@ import java.util.Optional;
 public class FieldDeleteService {
 
     private final FieldRepository repository;
+    private final FieldFinder finder;
 
     /**
      * Deletes the field with the given business identifier.
      *
      * @param fieldId the business identifier of the field to delete
      * @throws pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException
-     *         if no field with the given ID exists
+     *         if no field with the given ID exists, thrown by
+     *         {@link pl.luki2183.farmManager.fields.utils.FieldFinder#find(String)}
      */
     @Transactional
     public void deleteFieldById(String fieldId) {
         log.info("Deleting FieldEntity with id: {}", fieldId);
-        Optional<FieldEntity> existingEntity = repository.findByFieldId(fieldId);
-        if (existingEntity.isEmpty()) {
-            log.warn("Did not find field with id: {}", fieldId);
-            throw new FieldEntityNotFoundException();
-        }
-        repository.delete(existingEntity.get());
+        FieldEntity entity = finder.find(fieldId);
+        repository.delete(entity);
         log.debug("Successfully deleted FieldEntity with id: {}", fieldId);
     }
 }

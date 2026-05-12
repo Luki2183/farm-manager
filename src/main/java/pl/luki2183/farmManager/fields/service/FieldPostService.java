@@ -10,6 +10,7 @@ import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
+import pl.luki2183.farmManager.fields.utils.FieldFinder;
 
 /**
  * Service class responsible for persisting new farm fields.
@@ -21,6 +22,7 @@ public class FieldPostService {
 
     private final FieldRepository repository;
     private final FieldMapper mapper;
+    private final FieldFinder finder;
 
     /**
      * Converts the provided {@link GeoJSONDto} to a {@link FieldEntity} and persists it.
@@ -33,7 +35,7 @@ public class FieldPostService {
     @Transactional
     public FieldDto saveField(GeoJSONDto dto){
         log.info("Creating FieldEntity: {}", dto);
-        if (repository.existsByFieldId(dto.getId())) {
+        if (finder.exists(dto.getId())) {
             log.warn("Primary key violation error when creating FieldEntity with id: {}", dto.getId());
             throw new PrimaryKeyViolationException();
         }

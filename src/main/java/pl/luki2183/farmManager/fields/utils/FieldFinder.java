@@ -44,4 +44,18 @@ public class FieldFinder implements Finder<FieldEntity, String> {
         log.debug("Found FieldEntity result: {}", result);
         return result;
     }
+
+    /**
+     * Checks whether a field with the given business identifier exists.
+     *
+     * @param fieldId the business identifier of the field to check
+     * @return {@code true} if a matching field exists, {@code false} otherwise
+     */
+    @Override
+    public Boolean exists(String fieldId) {
+        log.debug("Entering exists with id: {}", fieldId);
+        boolean present = repository.existsByFieldId(fieldId);
+        log.debug("Status of exists with id: {}, result: {}", fieldId, present);
+        return present;
+    }
 }
