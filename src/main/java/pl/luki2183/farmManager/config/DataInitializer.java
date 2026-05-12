@@ -57,9 +57,10 @@ public class DataInitializer implements ApplicationRunner {
             defaultColors.put(type, "#00aaff");
         }
 
-        SettingsEntity settings = new SettingsEntity();
-        settings.setCenter(defaultCenter);
-        settings.setGrainColors(defaultColors);
+        SettingsEntity settings = SettingsEntity.builder()
+                .center(defaultCenter)
+                .grainColors(defaultColors)
+                .build();
         settingsRepository.save(settings);
         log.info("Settings initialized with default center (lat: {}, lng: {}) and {} grain colors.",
                 defaultCenter.getLat(), defaultCenter.getLng(), defaultColors.size());

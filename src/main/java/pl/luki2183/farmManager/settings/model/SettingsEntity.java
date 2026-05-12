@@ -18,8 +18,7 @@ import java.util.Map;
  * collection table joined by {@code settings_id}.</p>
  */
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

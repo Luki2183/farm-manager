@@ -17,7 +17,7 @@ import java.time.LocalDate;
  * field is removed. Weather data is embedded directly via {@link WeatherInfoEntity}.</p>
  */
 @Entity
-@Getter @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

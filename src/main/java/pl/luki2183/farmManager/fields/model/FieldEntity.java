@@ -2,10 +2,7 @@ package pl.luki2183.farmManager.fields.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 
 import java.util.List;
@@ -21,7 +18,7 @@ import java.util.List;
  * {@link FieldInfoEntity}, ensuring field info is deleted alongside the field.</p>
  */
 @Entity
-@Getter @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "fields")

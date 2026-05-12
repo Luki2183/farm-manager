@@ -26,9 +26,10 @@ public class WeatherInfoMapper implements Mapper<WeatherInfoEntity, WeatherInfoD
      */
     public WeatherInfoEntity fromResponseToEntity(WeatherDto dto) {
         log.debug("Mapping WeatherDto to WeatherInfoEntity: {}", dto);
-        WeatherInfoEntity entity = new WeatherInfoEntity();
-        entity.setHumidity(dto.getRelativeHumidity());
-        entity.setWindSpeed(dto.getWind().getSpeed().getValue());
+        WeatherInfoEntity entity = WeatherInfoEntity.builder()
+                .humidity(dto.getRelativeHumidity())
+                .windSpeed(dto.getWind().getSpeed().getValue())
+                .build();
         log.debug("Mapped WeatherInfoEntity result: {}", entity);
         return entity;
     }
@@ -42,9 +43,10 @@ public class WeatherInfoMapper implements Mapper<WeatherInfoEntity, WeatherInfoD
     @Override
     public WeatherInfoEntity fromDtoToEntity(WeatherInfoDto dto) {
         log.debug("Mapping WeatherInfoDto to WeatherInfoEntity: {}", dto);
-        WeatherInfoEntity entity = new WeatherInfoEntity();
-        entity.setWindSpeed(dto.getWindSpeed());
-        entity.setHumidity(dto.getHumidity());
+        WeatherInfoEntity entity = WeatherInfoEntity.builder()
+                .windSpeed(dto.getWindSpeed())
+                .humidity(dto.getHumidity())
+                .build();
         log.debug("Mapped WeatherInfoEntity result: {}", entity);
         return entity;
     }

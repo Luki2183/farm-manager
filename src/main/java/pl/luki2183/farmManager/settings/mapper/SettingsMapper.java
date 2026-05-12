@@ -45,12 +45,14 @@ public class SettingsMapper implements Mapper<SettingsEntity, SettingsDto> {
     @Override
     public SettingsEntity fromDtoToEntity(SettingsDto dto) {
         log.debug("Mapping SettingsDto to SettingsEntity: {}", dto);
-        SettingsEntity entity = new SettingsEntity();
-        PointEntity centerEntity = new PointEntity();
-        centerEntity.setLat(dto.getCenter().getLat());
-        centerEntity.setLng(dto.getCenter().getLng());
-        entity.setCenter(centerEntity);
-        entity.setGrainColors(dto.getGrainColors());
+        PointEntity centerEntity = PointEntity.builder()
+                .lat(dto.getCenter().getLat())
+                .lng(dto.getCenter().getLng())
+                .build();
+        SettingsEntity entity = SettingsEntity.builder()
+                .center(centerEntity)
+                .grainColors(dto.getGrainColors())
+                .build();
         log.debug("Mapped SettingsEntity result: {}", entity);
         return entity;
     }
