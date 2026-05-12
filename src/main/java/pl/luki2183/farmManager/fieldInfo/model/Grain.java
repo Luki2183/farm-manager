@@ -1,5 +1,11 @@
 package pl.luki2183.farmManager.fieldInfo.model;
 
+/**
+ * Enumeration of crop and grain types that can be assigned to a farm field.
+ *
+ * <p>Used as the grain type value in {@link FieldInfoEntity} and related DTOs.
+ * {@code DEFAULT} serves as the fallback value when no specific crop has been assigned.</p>
+ */
 public enum Grain {
     DEFAULT, // domyślne
     WHEAT, // przenica

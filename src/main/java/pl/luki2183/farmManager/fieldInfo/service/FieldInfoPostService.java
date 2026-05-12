@@ -18,6 +18,13 @@ import pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity;
 import pl.luki2183.farmManager.weatherInfo.service.WeatherGetService;
 import pl.luki2183.farmManager.weatherInfo.utils.CoordinatesHelper;
 
+/**
+ * Service class responsible for persisting new field info records.
+ *
+ * <p>On creation, fetches current weather data for the field's geographic center
+ * via {@link pl.luki2183.farmManager.weatherInfo.service.WeatherGetService}
+ * and associates it with the new record.</p>
+ */
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -30,6 +37,22 @@ public class FieldInfoPostService {
     private final FieldInfoFinder infoFinder;
     private final CoordinatesHelper coordinatesHelper;
 
+    /**
+     * Creates a new field info record for the field identified by {@code dto.getFieldId()}.
+     *
+     * <p>Resolves the associated {@link pl.luki2183.farmManager.fields.model.FieldEntity},
+     * computes its geographic center, fetches live weather data for that point,
+     * then persists the new {@link FieldInfoEntity}.</p>
+     *
+     * @param dto the {@link FieldInfoCreateDto} describing the new field info
+     * @return the persisted field info as a {@link FieldInfoDto}
+     * @throws pl.luki2183.farmManager.exception.model.PrimaryKeyViolationException
+     *         if a field info with the same ID already exists, thrown by
+     *         {@link FieldInfoFinder#exists(String)}
+     * @throws pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException
+     *         if no field with the given ID exists, thrown by
+     *         {@link pl.luki2183.farmManager.fields.utils.FieldFinder#find(String)}
+     */
     @Transactional
     public FieldInfoDto addInfo(FieldInfoCreateDto dto) {
         log.info("Creating FieldEntity: {}", dto);

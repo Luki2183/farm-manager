@@ -11,6 +11,14 @@ import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoListDto;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoGetService;
 
+/**
+ * MVC controller handling Thymeleaf view rendering for the field info list page.
+ *
+ * <p>Base path: {@code /fieldsInfo}</p>
+ *
+ * <p>Supports optional filtering by field name, grain type, area range,
+ * humidity, and wind speed via query parameters.</p>
+ */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -19,6 +27,18 @@ public class FieldInfoViewController {
 
     private final FieldInfoGetService getService;
 
+    /**
+     * Renders the fields-info page with an optionally filtered list of field infos.
+     *
+     * @param fieldName  optional filter for field name
+     * @param grainType  optional filter for grain type
+     * @param minArea    optional minimum surface area filter in square meters
+     * @param maxArea    optional maximum surface area filter in square meters
+     * @param humidity   optional minimum humidity filter as a percentage
+     * @param wind       optional maximum wind speed filter in km/h
+     * @param model      the Spring MVC {@link Model} used to pass attributes to the view
+     * @return the logical name of the fields-info Thymeleaf template
+     */
     @GetMapping
     public String getAllFields(
             @RequestParam(required = false) String fieldName,
