@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "fields")

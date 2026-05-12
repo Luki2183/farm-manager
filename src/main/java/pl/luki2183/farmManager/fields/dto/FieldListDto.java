@@ -1,6 +1,9 @@
 package pl.luki2183.farmManager.fields.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,6 +14,9 @@ import java.util.List;
  * suitable for bulk retrieval responses.</p>
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class FieldListDto {
     /** The list of field DTOs. */
     private List<FieldDto> dtoList;

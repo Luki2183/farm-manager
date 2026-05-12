@@ -1,6 +1,9 @@
 package pl.luki2183.farmManager.fields.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,6 +14,9 @@ import java.util.List;
  * intended as the top-level response payload for the map frontend.</p>
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GeoJSONListDto {
     /** The list of GeoJSON feature DTOs. */
     private List<GeoJSONDto> dtoList;

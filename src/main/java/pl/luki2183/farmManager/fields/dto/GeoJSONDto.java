@@ -1,6 +1,9 @@
 package pl.luki2183.farmManager.fields.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 
 import java.util.List;
@@ -13,6 +16,9 @@ import java.util.List;
  * map frontend.</p>
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GeoJSONDto {
     private String id;
     private String type = "Feature";
