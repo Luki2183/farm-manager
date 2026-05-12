@@ -11,6 +11,7 @@ import pl.luki2183.farmManager.fields.dto.FieldDto;
 import pl.luki2183.farmManager.fields.dto.FieldListDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONListDto;
+import pl.luki2183.farmManager.fields.fixtures.FieldEntityFixtures;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.model.PointEntity;
@@ -74,8 +75,8 @@ class FieldMapperTest {
     @Test
     void should_map_FieldEntity_list_to_GeoJSONListDto() {
         // given
-        FieldEntity entity1 = validFieldEntityBuilder().fieldId("field-1").build();
-        FieldEntity entity2 = validFieldEntityBuilder().fieldId("field-2").build();
+        FieldEntity entity1 = FieldEntityFixtures.valid().fieldId("field-1").build();
+        FieldEntity entity2 = FieldEntityFixtures.valid().fieldId("field-2").build();
         List<FieldEntity> fields = List.of(entity1, entity2);
 
         // when
@@ -90,8 +91,8 @@ class FieldMapperTest {
     @Test
     void should_map_FieldEntity_list_to_FieldListDto() {
         // given
-        FieldEntity entity1 = validFieldEntityBuilder().fieldId("field-1").build();
-        FieldEntity entity2 = validFieldEntityBuilder().fieldId("field-2").build();
+        FieldEntity entity1 = FieldEntityFixtures.valid().fieldId("field-1").build();
+        FieldEntity entity2 = FieldEntityFixtures.valid().fieldId("field-2").build();
         List<FieldEntity> fields = List.of(entity1, entity2);
 
         // when
@@ -121,12 +122,5 @@ class FieldMapperTest {
         Assertions.assertThat(result.getCoordinates().size()).isEqualTo(1);
         Assertions.assertThat(result.getCoordinates().getFirst().getLng()).isEqualTo(21.0);
         Assertions.assertThat(result.getCoordinates().getFirst().getLat()).isEqualTo(51.0);
-    }
-
-    private FieldEntity.FieldEntityBuilder validFieldEntityBuilder() {
-        return FieldEntity.builder()
-                .fieldId("field-1")
-                .coordinates(List.of(PointEntity.builder().lng(21.0).lat(51.0).build()))
-                .fieldInfo(FieldInfoEntity.builder().grainType(Grain.CARROT).build());
     }
 }
