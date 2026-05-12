@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.exception.model.FieldInfoNotFoundException;
+import pl.luki2183.farmManager.exception.model.FieldInfoEntityNotFoundException;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
@@ -24,7 +24,7 @@ public class FieldInfoPutService {
     @Transactional
     public FieldInfoEntity updateInfo(FieldInfoUpdateDto dto) {
         Optional<FieldInfoEntity> existingEntity = repository.findByFieldId(dto.getFieldId());
-        if (existingEntity.isEmpty()) throw new FieldInfoNotFoundException();
+        if (existingEntity.isEmpty()) throw new FieldInfoEntityNotFoundException();
         return helper.update(existingEntity.get(), dto);
     }
 
@@ -32,7 +32,7 @@ public class FieldInfoPutService {
     public FieldInfoEntity updateWeather(String fieldId, WeatherInfoEntity entity) {
         log.info("Entering updateWeather with: {}, {}", fieldId, entity);
         Optional<FieldInfoEntity> existingFieldInfo = repository.findByFieldId(fieldId);
-        if (existingFieldInfo.isEmpty()) throw new FieldInfoNotFoundException();
+        if (existingFieldInfo.isEmpty()) throw new FieldInfoEntityNotFoundException();
         return helper.updateWeatherInfo(existingFieldInfo.get(), entity);
     }
 }

@@ -3,6 +3,7 @@ package pl.luki2183.farmManager.settings.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.luki2183.farmManager.exception.model.SettingsEntityNotFoundException;
 import pl.luki2183.farmManager.settings.dto.SettingsDto;
 import pl.luki2183.farmManager.settings.mapper.SettingsMapper;
 import pl.luki2183.farmManager.settings.repo.SettingsRepository;
@@ -22,7 +23,7 @@ public class SettingsGetService {
      * Loads the singleton settings record and returns it as a DTO.
      *
      * @return the current {@link SettingsDto}
-     * @throws pl.luki2183.farmManager.exception.model.SettingsNotFoundException
+     * @throws SettingsEntityNotFoundException
      *         if the settings record does not exist
      */
     public SettingsDto getSettings() {

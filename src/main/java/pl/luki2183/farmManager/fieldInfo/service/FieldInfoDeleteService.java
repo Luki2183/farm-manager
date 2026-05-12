@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.repo.FieldInfoRepository;
-import pl.luki2183.farmManager.exception.model.FieldInfoNotFoundException;
+import pl.luki2183.farmManager.exception.model.FieldInfoEntityNotFoundException;
 
 import java.util.Optional;
 
@@ -18,7 +18,7 @@ public class FieldInfoDeleteService {
     @Transactional
     public void deleteById(String fieldId) {
         Optional<FieldInfoEntity> entity = repository.findByFieldId(fieldId);
-        if (entity.isEmpty()) throw new FieldInfoNotFoundException();
+        if (entity.isEmpty()) throw new FieldInfoEntityNotFoundException();
         repository.delete(entity.get());
     }
 }

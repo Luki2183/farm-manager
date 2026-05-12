@@ -1,0 +1,63 @@
+/* ── error.css ────────────────────────────────────────────────────────────── */
+
+#error-container {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.error-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 16px;
+    padding: 48px 40px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+}
+
+.error-code {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: #4CAF50;
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.error-title {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: rgb(50, 50, 50);
+    margin: 0 0 16px;
+}
+
+.error-message {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 15px;
+    color: rgb(100, 100, 100);
+    line-height: 1.6;
+    margin: 0 0 32px;
+}
+
+.error-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.error-btn {
+    width: 160px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
