@@ -23,8 +23,9 @@ public class SettingsGetService {
      * Loads the singleton settings record and returns it as a DTO.
      *
      * @return the current {@link SettingsDto}
-     * @throws SettingsEntityNotFoundException
-     *         if the settings record does not exist
+     * @throws pl.luki2183.farmManager.exception.model.SettingsEntityNotFoundException
+     *         if the settings record does not exist, thrown by
+     *         {@link pl.luki2183.farmManager.settings.repo.SettingsRepository#loadSingleton() SettingsRepository.loadSingleton()}
      */
     public SettingsDto getSettings() {
         log.info("Fetching application settings");

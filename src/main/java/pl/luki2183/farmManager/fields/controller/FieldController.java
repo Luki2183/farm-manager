@@ -53,7 +53,8 @@ public class FieldController {
      * @param fieldId the business identifier of the field
      * @return {@link ResponseEntity} containing the matching {@link FieldDto}
      * @throws pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException
-     *         if no field with the given ID exists
+     *         if no field with the given ID exists, thrown by
+     *         {@link pl.luki2183.farmManager.fields.utils.FieldFinder#find(String) FieldFinder.find(String)}
      */
     @GetMapping("/{fieldId}")
     public ResponseEntity<FieldDto> getFieldWithId(
@@ -90,7 +91,8 @@ public class FieldController {
      *         persisted {@link FieldDto} in the body; the {@code Location} header
      *         points to {@code /api/fields/{id}}
      * @throws pl.luki2183.farmManager.exception.model.PrimaryKeyViolationException
-     *         if a field with the same ID already exists
+     *         if a field with the same ID already exists, thrown by
+     *         {@link pl.luki2183.farmManager.fields.utils.FieldFinder#exists(String) FieldFinder.exists(String)}
      */
     @PostMapping
     public ResponseEntity<FieldDto> addField(
@@ -111,7 +113,8 @@ public class FieldController {
      * @param fieldId the business identifier of the field to update
      * @return {@link ResponseEntity} containing the updated {@link FieldDto}
      * @throws pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException
-     *         if no field with the given ID exists
+     *         if no field with the given ID exists, thrown by
+     *         {@link pl.luki2183.farmManager.fields.utils.FieldFinder#find(String) FieldFinder.find(String)}
      */
     @PutMapping("/{fieldId}")
     public ResponseEntity<FieldDto> updateField(
@@ -130,7 +133,8 @@ public class FieldController {
      * @param fieldId the business identifier of the field to delete
      * @return {@link ResponseEntity} with status {@code 204 No Content}
      * @throws pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException
-     *         if no field with the given ID exists
+     *         if no field with the given ID exists, thrown by
+     *         {@link pl.luki2183.farmManager.fields.utils.FieldFinder#find(String) FieldFinder.find(String)}
      */
     @DeleteMapping("/{fieldId}")
     public ResponseEntity<Void> deleteField(

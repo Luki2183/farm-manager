@@ -10,11 +10,12 @@ import pl.luki2183.farmManager.settings.service.SettingsGetService;
 import pl.luki2183.farmManager.settings.service.SettingsPutService;
 
 /**
- * REST controller exposing weather information endpoints.
+ * REST controller exposing settings endpoints.
  *
  * <p>Base path: {@code /api/settings}</p>
  *
- * <p>Business logic delegated to {@link SettingsGetService} and {@link SettingsPutService}</p>
+ * <p>Delegates read operations to {@link SettingsGetService}
+ * and write operations to {@link SettingsPutService}.</p>
  */
 @Slf4j
 @RestController
@@ -25,6 +26,14 @@ public class SettingsController {
     private final SettingsGetService getService;
     private final SettingsPutService putService;
 
+    /**
+     * Retrieves the current application settings.
+     *
+     * @return {@link ResponseEntity} containing the current {@link SettingsDto}
+     * @throws pl.luki2183.farmManager.exception.model.SettingsEntityNotFoundException
+     *         if the singleton settings record does not exist, thrown by
+     *         {@link pl.luki2183.farmManager.settings.repo.SettingsRepository#loadSingleton() SettingsRepository.loadSingleton()}
+     */
     @GetMapping
     public ResponseEntity<SettingsDto> getSettings() {
         log.info("Received request to get settings");

@@ -30,15 +30,20 @@ public class WeatherGetService {
     private final URI baseUrl = URI.create("https://weather.googleapis.com/v1/currentConditions:lookup");
 
     /**
-     * <p>Prepares Uri with queryParams as such:</p>
+     * Fetches current weather conditions for the given geographic point and returns
+     * the result as a {@link WeatherInfoEntity}.
+     *
+     * <p>Builds a request URL with the following query parameters:</p>
      * <ul>
-     *     <li>"key"</li>
-     *     <li>"location.latitude"</li>
-     *     <li>"location.longitude"</li>
+     *     <li>{@code key} — Google API key from {@link pl.luki2183.farmManager.config.GoogleConfig}</li>
+     *     <li>{@code location.latitude} — latitude of the point</li>
+     *     <li>{@code location.longitude} — longitude of the point</li>
      * </ul>
-     * <p>then uses private {@code fetchSingle} method to receive DTO from Google Weather Services.</p>
-     * @param point point with lat and lng
-     * @return {@link pl.luki2183.farmManager.weatherInfo.model.WeatherInfoEntity}
+     *
+     * @param point the geographic point for which to fetch weather data
+     * @return a {@link WeatherInfoEntity} containing humidity and wind speed
+     * @throws pl.luki2183.farmManager.exception.model.WeatherInfoException
+     *         if the API returns a null response or an HTTP error occurs
      */
     public WeatherInfoEntity getWeatherInfoEntity(PointEntity point) {
         log.info("Fetching weather info for coordinates: lat={} lng={}", point.getLat(), point.getLng());
@@ -53,15 +58,23 @@ public class WeatherGetService {
     }
 
     /**
-     * Reuses {@code getWeatherInfoEntity} to fetch and map weather info for controller response.
-     * <p>It's only use is inside the controller.</p>
-     * @param point point with lat and lng
-     * @return {@link WeatherInfoDto}
+     * Fetches current weather conditions for the given geographic point and returns
+     * the result as a {@link WeatherInfoDto}.
+     *
+     * <p>Delegates to {@link #getWeatherInfoEntity(PointEntity)} and maps the result
+     * to a DTO. Intended for use in controller responses.</p>
+     *
+     * @param point the geographic point for which to fetch weather data
+     * @return a {@link WeatherInfoDto} containing humidity and wind speed
+     * @throws pl.luki2183.farmManager.exception.model.WeatherInfoException
+     *         if the API returns a null response or an HTTP error occurs
      */
     public WeatherInfoDto getWeatherInfoDto(PointEntity point) {
         return mapper.fromEntityToDto(getWeatherInfoEntity(point));
     }
 
+    // Performs the actual HTTP call to the Google Weather API and maps the response.
+    // Throws WeatherInfoException on null response or HTTP failure.
     private WeatherInfoEntity fetchSingle(String url, PointEntity point) {
         log.debug("Entering fetchSingle with params: url={}, point={}", url, point);
         try {
