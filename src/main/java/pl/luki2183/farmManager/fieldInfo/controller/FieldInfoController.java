@@ -2,9 +2,13 @@ package pl.luki2183.farmManager.fieldInfo.controller;
 
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoCreateDto;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
+import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoListDto;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoDeleteService;
@@ -12,8 +16,9 @@ import pl.luki2183.farmManager.fieldInfo.service.FieldInfoGetService;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoPostService;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoPutService;
 
-import java.util.List;
+import java.net.URI;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/fieldInfo")
@@ -25,30 +30,55 @@ public class FieldInfoController {
     private final FieldInfoDeleteService deleteService;
 
     @GetMapping
-    public List<FieldInfoDto> getAllInfo() {
-        return getService.getAllInfo();
+    public ResponseEntity<FieldInfoListDto> getAllInfo() {
+        log.info("Received request to get all field infos");
+        FieldInfoListDto result = getService.getAllInfo();
+        log.info("Successfully retrieved all field infos: {}", result);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{fieldId}")
-    public FieldInfoDto getInfoByFieldId(@PathVariable String fieldId) {
-        return getService.getInfoByFieldId(fieldId);
+    public ResponseEntity<FieldInfoDto> getInfoByFieldId(
+            @PathVariable String fieldId
+    ) {
+        log.info("Received request to get field info with id: {}", fieldId);
+        FieldInfoDto result = getService.getInfoByFieldId(fieldId);
+        log.info("Successfully retrieved field info: {}", result);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public FieldInfoEntity addFieldInfo(@RequestBody FieldInfoUpdateDto dto) {
-        return postService.addInfo(dto);
+    public ResponseEntity<FieldInfoDto> addFieldInfo(
+            @RequestBody FieldInfoCreateDto dto
+    ) {
+        log.info("Received request to create FieldInfoEntity: {}", dto);
+        FieldInfoDto result = postService.addInfo(dto);
+        log.info("Successfully created FieldInfoEntity: {}", result);
+        return ResponseEntity
+                .created(URI.create("/api/fieldInfo/".concat(result.getFieldId())))
+                .body(result);
     }
 
     @PutMapping("/{fieldId}")
-    @ResponseStatus(HttpStatus.OK)
-    public FieldInfoEntity updateFieldInfo(@RequestBody FieldInfoUpdateDto dto) {
-        return putService.updateInfo(dto);
+    public ResponseEntity<FieldInfoDto> updateFieldInfo(
+            @RequestBody FieldInfoUpdateDto dto,
+            @PathVariable String fieldId
+    ) {
+        log.info("Received request to update field info with id: {}, and data: {}", fieldId, dto);
+        FieldInfoDto result = putService.updateInfo(dto, fieldId);
+        log.info("Successfully updated FieldInfoEntity: {}", result);
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{fieldId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFieldInfoById(@PathVariable String fieldId) {
+    public ResponseEntity<Void> deleteFieldInfoById(
+            @PathVariable String fieldId
+    ) {
+        log.info("Received request to delete field with id: {}", fieldId);
         deleteService.deleteById(fieldId);
+        log.info("Successfully deleted FieldInfoEntity with id: {}", fieldId);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

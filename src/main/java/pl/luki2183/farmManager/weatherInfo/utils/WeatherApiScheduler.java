@@ -35,7 +35,7 @@ public class WeatherApiScheduler {
     @Scheduled(fixedRate = 2, timeUnit = TimeUnit.HOURS)
     public void updateAllWeatherInfo() {
         log.info("Starting scheduled weather update for all fields");
-        Map<String, PointEntity> fieldIdToCenterMap = fieldInfoGetService.getAllInfo().stream()
+        Map<String, PointEntity> fieldIdToCenterMap = fieldInfoGetService.getAllInfo().getDtoList().stream()
                 .map(FieldInfoDto::getFieldId)
                 .map(fieldFinder::find)
                 .collect(Collectors.toMap(

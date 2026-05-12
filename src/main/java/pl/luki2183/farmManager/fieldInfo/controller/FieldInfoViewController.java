@@ -7,11 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
+import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoListDto;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoGetService;
-
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -31,11 +29,13 @@ public class FieldInfoViewController {
             @RequestParam(required = false) Double wind,
             Model model
     ) {
-        List<FieldInfoDto> fields = getService.getFilteredFields(fieldName, grainType, minArea, maxArea, humidity, wind);
+        log.info("Received request to render fields-info view");
+        FieldInfoListDto fields = getService.getFilteredFields(fieldName, grainType, minArea, maxArea, humidity, wind);
         model.addAttribute("fields", fields);
         model.addAttribute("activePage", "fields");
         model.addAttribute("grainType", grainType);
         model.addAttribute("grainTypes", Grain.values());
+        log.debug("Added attributes to model: fields={}, grainType={}, grainTypes={}", fields, grainType, Grain.values());
         return "fields-info";
     }
 

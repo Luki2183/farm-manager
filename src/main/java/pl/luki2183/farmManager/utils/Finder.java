@@ -16,4 +16,5 @@ public interface Finder<T, ID extends String> {
      *         or equivalent if no entity with the given {@code id} exists
      */
     T find(ID id);
+    Boolean exists(ID id);
 }

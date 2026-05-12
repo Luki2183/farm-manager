@@ -18,7 +18,7 @@
     <!-- LEFT CONTENT -->
     <div id="fields-container">
         <div class="fields-list">
-            <div th:each="field : ${fields}">
+            <div th:each="field : ${fields.getDtoList()}">
                 <div th:replace="~{fragments/field-info-card :: fieldCard(field=${field})}"></div>
             </div>
         </div>
