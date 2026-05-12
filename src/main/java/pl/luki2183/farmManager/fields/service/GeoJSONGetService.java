@@ -3,12 +3,9 @@ package pl.luki2183.farmManager.fields.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONListDto;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
-
-import java.util.List;
 
 /**
  * Service class responsible for retrieving all fields in GeoJSON format.

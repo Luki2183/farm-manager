@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoCreateDto;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoListDto;
-import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
 import pl.luki2183.farmManager.fields.model.FieldEntity;

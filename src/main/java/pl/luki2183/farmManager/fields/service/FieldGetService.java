@@ -3,15 +3,12 @@ package pl.luki2183.farmManager.fields.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.luki2183.farmManager.exception.model.FieldEntityNotFoundException;
 import pl.luki2183.farmManager.fields.dto.FieldDto;
 import pl.luki2183.farmManager.fields.dto.FieldListDto;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
 import pl.luki2183.farmManager.fields.utils.FieldFinder;
-
-import java.util.Optional;
 
 /**
  * Service class responsible for retrieving farm fields.

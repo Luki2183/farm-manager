@@ -3,14 +3,12 @@ package pl.luki2183.farmManager.fieldInfo.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoCreateDto;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoDto;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoListDto;
 import pl.luki2183.farmManager.fieldInfo.dto.FieldInfoUpdateDto;
-import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoDeleteService;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoGetService;
 import pl.luki2183.farmManager.fieldInfo.service.FieldInfoPostService;

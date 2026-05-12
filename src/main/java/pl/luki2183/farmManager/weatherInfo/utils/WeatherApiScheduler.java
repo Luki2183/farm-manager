@@ -32,6 +32,14 @@ public class WeatherApiScheduler {
     private final FieldFinder fieldFinder;
     private final CoordinatesHelper coordinatesHelper;
 
+    /**
+     * Fetches and persists current weather information for every field.
+     *
+     * <p>Scheduled to execute at a fixed rate of every 2 hours. The method
+     * builds a map of field IDs to their geographic center points, then
+     * iterates over each entry to update the stored {@link WeatherInfoEntity}.</p>
+     * <p>Its Google Weather API number of requests is inefficient due to inability of bulk request.</p>
+     */
     @Scheduled(fixedRate = 2, timeUnit = TimeUnit.HOURS)
     public void updateAllWeatherInfo() {
         log.info("Starting scheduled weather update for all fields");
