@@ -12,6 +12,7 @@ import pl.luki2183.farmManager.fields.dto.FieldListDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONDto;
 import pl.luki2183.farmManager.fields.dto.GeoJSONListDto;
 import pl.luki2183.farmManager.fields.fixtures.FieldEntityFixtures;
+import pl.luki2183.farmManager.fields.fixtures.GeoJSONDtoFixtures;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.model.PointEntity;
@@ -32,8 +33,7 @@ class FieldMapperUnitTest {
     void should_map_FieldEntity_to_FieldDto_correctly() {
         // given
         List<PointEntity> coords = List.of(PointEntity.builder().lat(1).lng(1).build());
-        FieldEntity entity = FieldEntity.builder()
-                .fieldId("field-1")
+        FieldEntity entity = FieldEntityFixtures.withFieldId("field-1")
                 .coordinates(coords)
                 .build();
 
@@ -51,12 +51,7 @@ class FieldMapperUnitTest {
     void should_map_FieldEntity_to_GeoJSONDto_correctly() {
         // given
         List<PointEntity> coords = List.of(PointEntity.builder().lat(1).lng(2).build());
-        FieldEntity entity = FieldEntity.builder()
-                .fieldInfo(
-                        FieldInfoEntity.builder()
-                                .grainType(Grain.CARROT)
-                                .build()
-                )
+        FieldEntity entity = FieldEntityFixtures.withFilledFieldInfoEntity()
                 .fieldId("field-1")
                 .coordinates(coords)
                 .build();
@@ -75,8 +70,8 @@ class FieldMapperUnitTest {
     @Test
     void should_map_FieldEntity_list_to_GeoJSONListDto() {
         // given
-        FieldEntity entity1 = FieldEntityFixtures.valid().fieldId("field-1").build();
-        FieldEntity entity2 = FieldEntityFixtures.valid().fieldId("field-2").build();
+        FieldEntity entity1 = FieldEntityFixtures.withFilledFieldInfoEntity().fieldId("field-1").build();
+        FieldEntity entity2 = FieldEntityFixtures.withFilledFieldInfoEntity().fieldId("field-2").build();
         List<FieldEntity> fields = List.of(entity1, entity2);
 
         // when
@@ -91,8 +86,8 @@ class FieldMapperUnitTest {
     @Test
     void should_map_FieldEntity_list_to_FieldListDto() {
         // given
-        FieldEntity entity1 = FieldEntityFixtures.valid().fieldId("field-1").build();
-        FieldEntity entity2 = FieldEntityFixtures.valid().fieldId("field-2").build();
+        FieldEntity entity1 = FieldEntityFixtures.withFieldId("field-1").build();
+        FieldEntity entity2 = FieldEntityFixtures.withFieldId("field-2").build();
         List<FieldEntity> fields = List.of(entity1, entity2);
 
         // when
@@ -107,12 +102,7 @@ class FieldMapperUnitTest {
     @Test
     void should_map_GeoJSONDto_to_FieldEntity() {
         // given
-        GeoJSONDto.Geometry geometry = new GeoJSONDto.Geometry();
-        geometry.setCoordinates(List.of(List.of(new double[]{21.0, 51.0})));
-        GeoJSONDto geoJSONDto = GeoJSONDto.builder()
-                .id("field-1")
-                .geometry(geometry)
-                .build();
+        GeoJSONDto geoJSONDto = GeoJSONDtoFixtures.valid().id("field-1").build();
 
         // when
         FieldEntity result = sut.geoJSONDtoToFieldEntity(geoJSONDto);

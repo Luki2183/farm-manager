@@ -1,5 +1,7 @@
 package pl.luki2183.farmManager.exception.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,8 +14,11 @@ import java.util.List;
  * errors to be returned in a single response if needed.</p>
  */
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ErrorDto {
     /** The list of individual error details included in this response. */
-    List<FieldError> errorList;
+    private List<FieldError> errorList;
+    private int count;
 }

@@ -12,12 +12,18 @@ public class FieldEntityFixtures {
         return FieldEntity.builder()
                 .fieldId("field-1")
                 .coordinates(List.of(PointEntity.builder().lng(21.0).lat(51.0).build()))
-                .fieldInfo(
-                        FieldInfoEntity.builder()
-                                .field(FieldEntity.builder().build())
-                                .fieldId("field-1")
-                                .grainType(Grain.CARROT)
-                                .build()
-                );
+                .fieldInfo(null);
+    }
+
+    public static FieldEntity.FieldEntityBuilder withFieldId(String fieldId) {
+        return valid().fieldId(fieldId);
+    }
+
+    public static FieldEntity.FieldEntityBuilder withFilledFieldInfoEntity() {
+        return valid().fieldInfo(FieldInfoEntity.builder()
+                .field(FieldEntity.builder().build())
+                .fieldId("field-1")
+                .grainType(Grain.CARROT)
+                .build());
     }
 }

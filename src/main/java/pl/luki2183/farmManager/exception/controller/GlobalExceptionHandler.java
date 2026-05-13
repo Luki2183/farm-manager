@@ -1,10 +1,12 @@
 package pl.luki2183.farmManager.exception.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.luki2183.farmManager.exception.dto.ErrorDto;
@@ -34,6 +36,56 @@ import java.util.List;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * Handles @Valid failures on @RequestBody parameters.
+     * Collects all field errors into the existing ErrorDto/FieldError structure.
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Object handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpServletRequest request, Model model) {
+        if (isApiRequest(request)) {
+            List<FieldError> errorList = ex.getBindingResult()
+                    .getFieldErrors()
+                    .stream()
+                    .map(fieldError -> FieldError.builder()
+                            .code(HttpStatus.BAD_REQUEST)
+                            .message(fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                            .path(request.getRequestURI())
+                            .build()
+                    )
+                    .toList();
+            ErrorDto errorDto = ErrorDto.builder()
+                    .errorList(errorList)
+                    .count(errorList.size())
+                    .build();
+            return ResponseEntity.badRequest()
+                    .body(errorDto);
+        }
+        return buildViewResponse(ex, HttpStatus.BAD_REQUEST, "Validation Failed", model);
+    }
+
+    /**
+     * Handles @Validated failures on @PathVariable and @RequestParam parameters.
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Object handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request, Model model) {
+        if (isApiRequest(request)) {
+            List<FieldError> errorList = ex.getConstraintViolations()
+                    .stream()
+                    .map(constraintViolation -> FieldError.builder()
+                            .code(HttpStatus.BAD_REQUEST)
+                            .message(constraintViolation.getPropertyPath() + ": " + constraintViolation.getMessage())
+                            .path(request.getRequestURI())
+                            .build())
+                    .toList();
+            ErrorDto errorDto = ErrorDto.builder()
+                    .errorList(errorList)
+                    .count(errorList.size())
+                    .build();
+            return ResponseEntity.badRequest().body(errorDto);
+        }
+        return buildViewResponse(ex, HttpStatus.BAD_REQUEST, "Validation Failed", model);
+    }
 
     /**
      * Handles {@link NotFoundException} and all its subclasses.
@@ -157,8 +209,10 @@ public class GlobalExceptionHandler {
                 .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
-        ErrorDto result = new ErrorDto();
-        result.setErrorList(List.of(error));
+        ErrorDto result = ErrorDto.builder()
+                .errorList(List.of(error))
+                .count(1)
+                .build();
         return ResponseEntity.status(httpStatus).body(result);
     }
 

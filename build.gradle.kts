@@ -34,6 +34,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 // Source: https://mvnrepository.com/artifact/org.zalando/logbook-spring-boot-starter
     implementation("org.zalando:logbook-spring-boot-starter:4.0.4")
+    // Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+    implementation("org.springframework.boot:spring-boot-starter-validation:4.1.0-RC1")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

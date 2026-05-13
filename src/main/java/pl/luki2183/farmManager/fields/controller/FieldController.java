@@ -1,8 +1,11 @@
 package pl.luki2183.farmManager.fields.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.luki2183.farmManager.fields.dto.FieldDto;
 import pl.luki2183.farmManager.fields.dto.FieldListDto;
@@ -24,6 +27,7 @@ import java.net.URI;
  * and deletion to {@link FieldDeleteService}.</p>
  */
 @Slf4j
+@Validated
 @RestController
 @RequestMapping("/api/fields")
 @RequiredArgsConstructor
@@ -58,7 +62,7 @@ public class FieldController {
      */
     @GetMapping("/{fieldId}")
     public ResponseEntity<FieldDto> getFieldWithId(
-            @PathVariable String fieldId
+            @NotBlank @PathVariable String fieldId
     ) {
         log.info("Received request to get field with id: {}", fieldId);
         FieldDto result = getService.getFieldWithId(fieldId);
@@ -75,7 +79,7 @@ public class FieldController {
      */
     @GetMapping("/exists/{fieldId}")
     public ResponseEntity<Boolean> fieldExists(
-            @PathVariable String fieldId
+            @NotBlank @PathVariable String fieldId
     ) {
         log.info("Received request to check if field exists with id: {}", fieldId);
         Boolean result = getService.checkIfExistsByFieldId(fieldId);
@@ -96,7 +100,7 @@ public class FieldController {
      */
     @PostMapping
     public ResponseEntity<FieldDto> addField(
-            @RequestBody GeoJSONDto dto
+            @Valid @RequestBody GeoJSONDto dto
     ){
         log.info("Received request to create FieldEntity: {}", dto);
         FieldDto result = postService.saveField(dto);
@@ -118,8 +122,8 @@ public class FieldController {
      */
     @PutMapping("/{fieldId}")
     public ResponseEntity<FieldDto> updateField(
-            @RequestBody GeoJSONDto dto,
-            @PathVariable String fieldId
+            @NotBlank @PathVariable String fieldId,
+            @Valid @RequestBody GeoJSONDto dto
     ) {
         log.info("Received request to update field with id: {}, and data: {}", fieldId, dto);
         FieldDto result = putService.updateField(fieldId, dto);
@@ -138,7 +142,7 @@ public class FieldController {
      */
     @DeleteMapping("/{fieldId}")
     public ResponseEntity<Void> deleteField(
-            @PathVariable String fieldId
+            @NotBlank @PathVariable String fieldId
     ){
         log.info("Received request to delete field with id: {}", fieldId);
         deleteService.deleteFieldById(fieldId);

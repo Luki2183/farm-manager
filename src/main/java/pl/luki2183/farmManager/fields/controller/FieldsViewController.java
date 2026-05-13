@@ -1,8 +1,10 @@
 package pl.luki2183.farmManager.fields.controller;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import pl.luki2183.farmManager.fieldInfo.model.Grain;
@@ -14,6 +16,7 @@ import pl.luki2183.farmManager.fieldInfo.model.Grain;
  * before delegating to the {@code map} or {@code error} templates.</p>
  */
 @Slf4j
+@Validated
 @Controller
 public class FieldsViewController {
 
@@ -40,7 +43,10 @@ public class FieldsViewController {
      * @return the logical name of the map Thymeleaf template
      */
     @GetMapping("/{fieldId}")
-    public String map(Model model, @PathVariable String fieldId) {
+    public String map(
+            Model model,
+            @NotBlank @PathVariable String fieldId
+    ) {
         log.info("Received request to render map view with fieldId: {}, at center", fieldId);
         model.addAttribute("activePage", "map");
         model.addAttribute("grainTypes", Grain.values());
