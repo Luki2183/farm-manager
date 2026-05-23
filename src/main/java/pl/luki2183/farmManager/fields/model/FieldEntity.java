@@ -2,10 +2,7 @@ package pl.luki2183.farmManager.fields.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.luki2183.farmManager.fieldInfo.model.FieldInfoEntity;
 
 import java.util.List;
@@ -50,5 +47,6 @@ public class FieldEntity {
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "field_info")
     @JsonBackReference
+    @ToString.Exclude
     private FieldInfoEntity fieldInfo;
 }
