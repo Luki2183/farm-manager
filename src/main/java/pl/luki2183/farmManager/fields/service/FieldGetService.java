@@ -7,7 +7,6 @@ import pl.luki2183.farmManager.fields.dto.FieldDto;
 import pl.luki2183.farmManager.fields.dto.FieldListDto;
 import pl.luki2183.farmManager.fields.mapper.FieldMapper;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
-import pl.luki2183.farmManager.fields.repo.FieldRepository;
 import pl.luki2183.farmManager.fields.utils.FieldFinder;
 
 /**
@@ -18,7 +17,6 @@ import pl.luki2183.farmManager.fields.utils.FieldFinder;
 @RequiredArgsConstructor
 public class FieldGetService {
 
-    private final FieldRepository repository;
     private final FieldMapper mapper;
     private final FieldFinder finder;
 
@@ -29,7 +27,7 @@ public class FieldGetService {
      */
     public FieldListDto getAllFields(){
         log.info("Fetching all fields");
-        FieldListDto result = mapper.fieldsToDtoList(repository.findAll());
+        FieldListDto result = mapper.fieldsToDtoList(finder.findAll());
         log.debug("Retrieved all fields: {}", result);
         return result;
     }
