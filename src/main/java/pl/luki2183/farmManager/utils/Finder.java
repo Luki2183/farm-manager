@@ -1,5 +1,7 @@
 package pl.luki2183.farmManager.utils;
 
+import java.util.List;
+
 /**
  * Generic interface for looking up a domain entity by its identifier.
  *
@@ -16,5 +18,6 @@ public interface Finder<T, ID extends String> {
      *         or equivalent if no entity with the given {@code id} exists
      */
     T find(ID id);
+    List<T> findAll();
     Boolean exists(ID id);
 }

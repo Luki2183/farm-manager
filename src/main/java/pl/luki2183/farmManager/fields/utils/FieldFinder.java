@@ -8,6 +8,7 @@ import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
 import pl.luki2183.farmManager.utils.Finder;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,6 +44,18 @@ public class FieldFinder implements Finder<FieldEntity, String> {
         FieldEntity result = fieldEntityOptional.get();
         log.debug("Found FieldEntity result: {}", result);
         return result;
+    }
+
+    /**
+     * Finds all {@link FieldEntity} from repository. Resulting list may be empty.
+     * @return List of {@link FieldEntity}
+     */
+    @Override
+    public List<FieldEntity> findAll() {
+        log.debug("Entering findAll");
+        List<FieldEntity> entities = repository.findAll();
+        log.debug("FieldEntity list result: {}", entities);
+        return entities;
     }
 
     /**
