@@ -4,14 +4,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import pl.luki2183.farmManager.fields.fixtures.FieldEntityFixtures;
 import pl.luki2183.farmManager.fields.model.FieldEntity;
 import pl.luki2183.farmManager.fields.repo.FieldRepository;
 
 import java.util.Optional;
 
-@DataJpaTest
+@SpringBootTest
+@ActiveProfiles("test")
 class FieldRepositoryIntegrationTest {
 
     @Autowired
