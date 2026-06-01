@@ -142,7 +142,7 @@ async function initMap() {
  */
 function loadFieldInfo(fieldId) {
     console.debug(`Loading fieldInfo for id=%o`, fieldId)
-    fetch(`api/fieldInfo/${fieldId}`)
+    fetch(`/api/fieldInfo/${fieldId}`)
         .then(response => {
             if (!response.ok) throw new Error(`Failed to load fieldInfo for id=${fieldId}`);
             return response.json();
