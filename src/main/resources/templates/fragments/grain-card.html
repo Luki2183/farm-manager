@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="PL">
 <body>
-
 <!--
     Fragment: grainCard(grain, hex)
     Square card showing the grain name, a colour swatch, and a hex input.
@@ -9,12 +8,9 @@
 -->
 <div class="grain-card" th:fragment="grainCard(grain, hex)"
      th:style="'border-top: 5px solid ' + ${hex}">
-
     <div class="grain-card-swatch" th:style="'background-color:' + ${hex}"></div>
-
     <h3 class="grain-card-name"
         th:text="${#strings.capitalize(#strings.toLowerCase(grain)).replaceAll('_', ' ')}"></h3>
-
     <div class="field-group">
         <label th:for="'color-' + ${grain}">Color</label>
         <label>
@@ -26,8 +22,6 @@
                    required/>
         </label>
     </div>
-
 </div>
-
 </body>
 </html>

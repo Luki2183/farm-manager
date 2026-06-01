@@ -17,31 +17,24 @@
 
 <!-- MAIN CONTENT -->
 <div id="settings-container">
-
     <!-- Flash message -->
     <div th:if="${successMessage}" class="settings-flash" th:text="${successMessage}"></div>
-
     <!-- Single form wraps all grain cards + the save button -->
     <form method="post" th:action="@{/settings/colors}">
         <input type="hidden" name="_method" value="put"/>
-
         <!-- Grain cards grid -->
         <div class="grain-cards-grid">
             <div th:each="entry : ${settings.getGrainColors()}">
                 <div th:replace="~{fragments/grain-card :: grainCard(grain=${entry.getKey()}, hex=${entry.getValue()})}"></div>
             </div>
         </div>
-
         <!-- Save all — pinned at the bottom -->
         <div class="settings-footer">
             <button type="submit" class="panel-btn save-btn settings-save-btn">
                 Save All Colors
             </button>
         </div>
-
     </form>
-
 </div>
-
 </body>
 </html>

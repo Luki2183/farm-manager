@@ -20,8 +20,11 @@
     <script th:src="@{/js/prepare_visuals.js}"></script>
 </head>
 <body>
+    <!-- MAP CONTROLS -->
     <div th:replace="~{fragments/map-controls :: mapControls}"></div>
+    <!-- FIELD DATA PANEL -->
     <div th:replace="~{fragments/field-panel :: fieldPanel}"></div>
+    <!-- TOP BAR -->
     <div th:replace="~{fragments/top-bar :: topBar}"></div>
     <div id="map"></div>
     <input type="hidden" id="focusedFieldId" th:value="${focusedFieldId}">

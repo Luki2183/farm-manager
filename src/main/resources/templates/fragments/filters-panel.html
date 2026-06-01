@@ -3,18 +3,14 @@
 <body>
     <div id="field-panel" th:fragment="filtersPanel">
         <div class="field-panel-container">
-
             <h2 class="panel-title">Filters</h2>
-
             <form method="get" th:action="@{/fieldsInfo}">
-
                 <div class="field-group">
                     <label>Field Name</label>
                     <label>
                         <input type="text" name="fieldName" th:value="${param.fieldName}" placeholder="Search by name..."/>
                     </label>
                 </div>
-
                 <div class="field-group">
                     <label>Grain Type</label>
                     <label>
@@ -28,42 +24,35 @@
                         </select>
                     </label>
                 </div>
-
                 <div class="field-group">
                     <label>Min Area</label>
                     <label>
                         <input type="number" name="minArea" th:value="${param.minArea}">
                     </label>
                 </div>
-
                 <div class="field-group">
                     <label>Max Area</label>
                     <label>
                         <input type="number" name="maxArea" th:value="${param.maxArea}">
                     </label>
                 </div>
-
                 <div class="field-group">
                     <label>Humidity ≥</label>
                     <label>
                         <input type="number" name="humidity" th:value="${param.humidity}">
                     </label>
                 </div>
-
                 <div class="field-group">
                     <label>Wind ≤</label>
                     <label>
                         <input type="number" name="wind" th:value="${param.wind}">
                     </label>
                 </div>
-
                 <div class="field-actions">
                     <button type="submit" class="panel-btn save-btn">Apply Filters</button>
                     <a th:href="@{/fieldsInfo}" class="panel-btn refresh-btn">Reset</a>
                 </div>
-
             </form>
-
         </div>
     </div>
 </body>
