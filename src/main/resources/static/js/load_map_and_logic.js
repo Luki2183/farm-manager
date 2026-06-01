@@ -58,7 +58,7 @@ async function initMap() {
                         outlineColor: "#343434"
                     },
                     snapping: {
-                        toLine: true,
+                        toLine: false,
                         toCoordinate: true,
                     }
                 }),
@@ -111,7 +111,6 @@ async function initMap() {
             selectedFeatureId = featureId;
             loadFieldInfo(featureId)
         })
-
         draw.on("deselect", () => {
             console.info(`Deselected feature with id=%o`, selectedFeatureId)
             let change = JSON.stringify(geometryCopyOfSelected) !== JSON.stringify(draw.getSnapshotFeature(selectedFeatureId).geometry)
@@ -132,7 +131,6 @@ async function initMap() {
         clearFieldPanel()
         loadSettings()
     })
-
 }
 
 /**
