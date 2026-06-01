@@ -328,7 +328,6 @@ function updateFieldInfo(featureId) {
         console.warn(`Couldn't update FieldInfo: no field is currently selected`)
         return
     }
-
     let feature = draw.getSnapshotFeature(featureId);
     let updateInfoStructure = {
         "fieldId": feature.id,
@@ -338,7 +337,6 @@ function updateFieldInfo(featureId) {
         "expectedHarvestDate": document.getElementById("expectedHarvestDate").value,
         "fieldName": document.getElementById("fieldName").value
     }
-
     fetch(`/api/fieldInfo/${feature.id}`, {
         method: "PUT",
         headers: {
