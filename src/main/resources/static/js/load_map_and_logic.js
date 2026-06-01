@@ -34,7 +34,6 @@ const grainMap = new Map;
  */
 async function initMap() {
     console.info(`Initializing map`)
-    await loadSettings()
     map = new google.maps.Map(document.getElementById("map"), {
         center: savedMapCenter,
         zoom: 15,
