@@ -59,7 +59,7 @@ async function initMap() {
                     },
                     snapping: {
                         toLine: false,
-                        toCoordinate: true,
+                        toCoordinate: false,
                     }
                 }),
                 new terraDraw.TerraDrawSelectMode({
