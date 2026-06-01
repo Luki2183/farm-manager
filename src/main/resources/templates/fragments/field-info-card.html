@@ -11,6 +11,13 @@
             <span>Show on map</span>
         </a>
 
+        <a class="delete-field-btn"
+           th:data-field-id="${field.fieldId}"
+            onclick="deleteField(this)">
+            <img th:src="@{/images/delete_icon.png}" alt="delete" class="delete-icon">
+            <span>Delete field</span>
+        </a>
+
         <!-- HEADER -->
         <h3 class="panel-title">
             <span th:text="'Field ' + ${field.fieldName}"></span>
