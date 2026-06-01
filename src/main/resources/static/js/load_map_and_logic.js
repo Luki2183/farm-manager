@@ -97,15 +97,7 @@ async function initMap() {
                         },
                     },
                 })
-            ],
-            // idStrategy: {
-            //     isValidId: (id) => typeof id === "number" && Number.isInteger(id),
-            //     getId: (function () {
-            //         let id = 0;
-            //         return function () {
-            //             return ++id;
-            //         };
-            //     })()}
+            ]
         });
 
         draw.start();

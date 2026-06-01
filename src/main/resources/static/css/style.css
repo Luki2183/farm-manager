@@ -386,7 +386,7 @@ input[type="number"] {
 
 .delete-field-btn {
     position: absolute;
-    top: 67px;
+    bottom: 15px;
     right: 15px;
     height: 32px;
     display: flex;
